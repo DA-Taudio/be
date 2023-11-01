@@ -1,0 +1,35 @@
+syntax = "proto3";
+package base;
+
+message PageInfo {
+  int32 currentPage = 1;
+  int32 totalPage = 2;
+  int32 pageSize = 3;
+}
+
+message PaginationInput {
+  int32 page = 1;
+  int32 limit = 2;
+  string after = 3;
+  string before = 4;
+}
+
+message PaginationResponse {
+  int32 currentPage = 1;
+  int32 totalPage = 2;
+  int32 pageSize = 3;
+}
+
+message BooleanPayload {
+  bool success = 1;
+}
+
+enum SortDirection {
+  DESC = 0;
+  ASC = 1;
+}
+
+message SortFieldInput {
+  string sortField = 1;
+  SortDirection sortDirection = 2;
+}

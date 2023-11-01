@@ -1,0 +1,30 @@
+syntax = "proto3";
+package media;
+
+service MediaService {
+    rpc GetManyMedia( GetManyMediaRequest) returns (GetManyMediaResponse){}
+}
+message Media {
+    string userId =1;
+    string name  =2;
+    string fileName =3;
+    string mimeType =4;
+    int32 size =5;
+    int32 duration =6;
+    string url =7;
+    MediaStatus status =8;
+    string _id = 9;
+}
+
+enum MediaStatus {
+    UPLOADING =0;
+    UPLOADED =1;
+}
+
+message GetManyMediaRequest{
+    repeated string ids= 1;
+}
+
+message GetManyMediaResponse{
+    repeated Media media =1;
+}

@@ -1,0 +1,35 @@
+syntax = "proto3";
+package sms;
+
+service SmsService {
+    rpc SendOtp(SendOtpRequest) returns (SendOtpResponse){}
+    rpc ConfirmOtp(ConfirmOtpRequest) returns (ConfirmOtpResponse){}
+    rpc GetPhoneNumber(GetPhoneNumberRequest) returns (GetPhoneNumberResponse){}
+    rpc inValidOtp(ConfirmOtpRequest) returns (ConfirmOtpResponse) {}
+
+}
+
+message SendOtpRequest{
+    string phoneNumber = 1;
+}
+
+message SendOtpResponse{
+    string phoneNumber = 1;
+    string sessionId = 2;
+    double otpExpiredTime = 3; 
+}
+
+message ConfirmOtpRequest{
+    string sessionId = 1;
+    string otp = 2;
+}
+
+message ConfirmOtpResponse{
+    bool confirmed = 1;
+}
+message GetPhoneNumberRequest{
+    string sessionId = 1;
+}
+message GetPhoneNumberResponse{
+    string phoneNumber = 1;
+}

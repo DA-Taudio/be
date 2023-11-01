@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/gateway/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/gateway/tsconfig.app.json",
+    "assets": [
+      "templates/hbs/*.hbs"
+    ]
+  },
+  "monorepo": true,
+  "root": "apps/gateway",
+  "projects": {
+    "gateway": {
+      "type": "application",
+      "root": "apps/gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/gateway/tsconfig.app.json"
+      }
+    },
+    "core": {
+      "type": "library",
+      "root": "libs/core",
+      "entryFile": "index",
+      "sourceRoot": "libs/core/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/core/tsconfig.lib.json"
+      }
+    },
+    "proto-schema": {
+      "type": "library",
+      "root": "libs/proto-schema",
+      "entryFile": "index",
+      "sourceRoot": "libs/proto-schema/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/proto-schema/tsconfig.lib.json"
+      }
+    },
+    "utils": {
+      "type": "library",
+      "root": "libs/utils",
+      "entryFile": "index",
+      "sourceRoot": "libs/utils/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/utils/tsconfig.lib.json"
+      }
+    },
+    "users-service": {
+      "type": "application",
+      "root": "apps/users-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/users-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/users-service/tsconfig.app.json"
+      }
+    },
+    "sms-service": {
+      "type": "application",
+      "root": "apps/sms-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/sms-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/sms-service/tsconfig.app.json"
+      }
+    },
+    "mailer-service": {
+      "type": "application",
+      "root": "apps/mailer-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/mailer-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/mailer-service/tsconfig.app.json"
+      }
+    },
+    "media-service": {
+      "type": "application",
+      "root": "apps/media-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/media-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/media-service/tsconfig.app.json"
+      }
+    },
+    "message-service": {
+      "type": "application",
+      "root": "apps/message-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/message-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/message-service/tsconfig.app.json"
+      }
+    },
+    "product-service": {
+      "type": "application",
+      "root": "apps/product-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/product-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/product-service/tsconfig.app.json"
+      }
+    },
+    "notification-service": {
+      "type": "application",
+      "root": "apps/notification-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/notification-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/notification-service/tsconfig.app.json"
+      }
+    }
+  }
+}

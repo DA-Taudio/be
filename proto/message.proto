@@ -1,0 +1,139 @@
+syntax = "proto3";
+package message; 
+import "base.proto";
+
+service MessageService{
+    rpc SendMessage(SendMessageRequest) returns (SendMessageResponse) {}
+    rpc ListMessage(ListMessageRequest) returns (ListMessageResponse) {} 
+    
+    rpc CreateConversation(CreateConversationRequest) returns (CreateConversationResponse) {}
+    rpc DeleteConversation(DeleteConversationRequest) returns (DeleteConversationResponse) {}
+    // rpc SendMessageToGroup(SendMessageToGroupRequest) returns (SendMessageToGroupResponse) {}
+    // rpc GetGroupMessages(GetGroupMessagesRequest) returns (GetGroupMessagesResponse) {}
+    
+    rpc SendJoinGroup(SendJoinGroupRequest) returns (SendJoinGroupResponse) {}
+    rpc ApproveJoinGroup(ApproveJoinGroupRequest) returns (ApproveJoinGroupResponse) {}
+    rpc RejectJoinGroup(RejectJoinGroupRequest) returns (RejectJoinGroupResponse) {}
+
+    rpc LeaveGroup(LeaveGroupRequest) returns (LeaveGroupResponse) {}
+    // rpc DeleteMessage(DeleteMessageRequest) returns (DeleteMessageResponse) {}
+    rpc ListConversation(ListConversationRequest) returns (ListConversationResponse) {}
+}
+
+
+
+message SendMessageRequest{
+    string content = 1;
+    string conversationId = 3;
+    string senderId = 2;
+}
+
+message SendMessageResponse{
+    bool success = 1;
+
+}
+
+message CreateConversationRequest{
+      string name = 1;
+      ConversationType type = 3;
+}
+
+message CreateConversationResponse{
+    Conversation conversation = 1;
+}
+
+message DeleteConversationRequest{
+    string conversationId = 1;
+}
+message DeleteConversationResponse{
+    bool success = 1;
+}
+
+message SendJoinGroupRequest{
+    string conversationId = 2;
+    
+}
+
+message SendJoinGroupResponse{
+    bool success = 1;
+}
+
+message ApproveJoinGroupRequest{
+    string userId = 1;
+    string conversationId = 2;
+}
+
+message ApproveJoinGroupResponse{
+    bool success = 1;
+}
+
+message RejectJoinGroupRequest{
+    string userId = 1;
+    string conversationId = 2;
+}
+
+message RejectJoinGroupResponse{
+    bool success = 1;
+}
+
+message LeaveGroupRequest{
+    string userId = 1;
+    string conversationId = 2;
+}
+
+message LeaveGroupResponse{
+    bool success = 1;
+}
+
+message message{
+    string _id = 1;
+    string content = 2;
+    string senderId = 3;
+    string conversationId = 4;
+
+    //base
+    double createdAt = 20;
+    double  createdBy = 21;
+    double updatedAt = 22;
+    double  updatedBy = 23;
+    string deletedBy = 24;
+    double  deletedAt = 25;
+}
+
+message Conversation{
+    string _id = 1;
+    string name = 2;
+    repeated string members = 3;
+    string ownerId = 4;
+    ConversationType type = 5;
+
+    //base
+    double createdAt = 20;
+    string  createdBy = 21;
+    double updatedAt = 22;
+    string  updatedBy = 23;
+    string deletedBy = 24;
+    double  deletedAt = 25;
+}
+
+message ListConversationRequest {
+    string userId = 1;
+}
+message ListConversationResponse {
+    repeated Conversation data = 1;
+}
+
+message  ListMessageRequest {
+    string conversationId = 1;
+    base.PaginationInput pagination = 2;
+};
+
+message ListMessageResponse{
+    repeated message data = 1;
+};
+
+//Enum
+enum ConversationType{
+    PERSONAL = 0;
+    GROUP = 2;
+}

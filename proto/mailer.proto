@@ -1,0 +1,22 @@
+syntax = "proto3";
+package mailer;
+
+service MailerService{
+    rpc SendEmail (SendEmailRequest) returns (SendEmailResponse){}
+    rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse){}
+}
+
+message SendEmailRequest{
+    string email = 1;
+}
+
+message SendEmailResponse{
+    string sessionId = 1;
+}
+message VerifyEmailRequest {
+    string otp = 1;
+    string sessionId = 2;
+}
+message VerifyEmailResponse {
+    bool success = 1;
+}

@@ -1,0 +1,417 @@
+syntax = "proto3";
+package product;
+import "base.proto";
+
+service ProductService{
+    //product
+    rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse) {}
+    rpc GetProduct(GetProductRequest) returns (GetProductResponse) {}
+    rpc GetListProduct(GetListProductRequest) returns (GetListProductResponse) {}
+    rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse) {}
+    rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse) {}
+    rpc ListProductByIds(ListProductByIdsRequest) returns (ListProductByIdsResponse){}
+    rpc IsFavoriteProduct(IsFavoriteProductRequest) returns (base.BooleanPayload) {}
+    rpc FavoriteProduct(FavoriteProductRequest) returns (base.BooleanPayload) {}
+ 
+
+    //payment
+    rpc CreatePayment(CreatePaymentRequest) returns (CreatePaymentResponse) {}
+    rpc CallBackPaymentZaloProcess(CallBackPaymentZaloRequest) returns (CallBackPaymentZaloResponse) {}
+    rpc callBackPaymentVNProcess(CallBackPaymentVNRequest) returns (CallBackPaymentVNResponse) {}
+
+
+    //Comment
+    rpc createComment(CreateCommentRequest) returns (CreateCommentResponse) {}
+    rpc ListComment(ListCommentRequest) returns (ListCommentResponse) {}
+    rpc ListFeedback(ListFeedbackRequest) returns (ListCommentResponse) {}
+
+
+
+    //Type
+    rpc CreateType(ProductType) returns (CreateProductResponse) {}
+    rpc ListType(ListTypeRequest) returns (ListTypeResponse) {}
+    rpc DeleteType(DeleteTypeRequest) returns (DeleteTypeResponse){}
+
+    //cart
+    rpc listOrderUser(ListOrderUserRequest) returns (ListOrderResponse) {}
+    rpc listOrderAdmin(ListOrderAdminRequest) returns (ListOrderResponse) {}
+    rpc DetailOrder(DetailOrderRequest) returns (OrderDto) {}
+    rpc ConfirmOrder(ConfirmOrderResquest) returns (ConfirmOrderResponse) {}
+
+    rpc AddToCart(AddToCartRequest) returns (AddToCartResponse) {}
+    rpc RemoveFromCart(RemoveFromCartRequest) returns (RemoveFromCartResponse) {}
+    rpc ListCart(ListCartRequest) returns (ListCartResponse) {}
+    rpc clearCart(ClearCartRequest) returns (RemoveFromCartResponse) {}
+}
+
+message CreateProductRequest{
+    string name = 1;
+    string description = 2;
+    float price = 3;
+    int32 countInStock = 4;
+    string image = 5;
+    string video = 6;
+    string manufacturer = 7;
+    string modelNumber = 8;
+    string dimensions = 9;
+    string weight = 10;
+    string connectivity = 11;
+    string powerSource = 12;
+    string compatibility = 13;
+    string warranty = 14;
+    string type = 15;
+}
+
+message CreateProductResponse{
+    bool success = 1;
+}
+
+message GetProductRequest{
+    string productId = 1;
+}
+
+message GetProductResponse{
+    Product product = 1;
+}
+
+message FilterList{
+    double price_lte = 1;
+    double price_gte = 2;
+    string type_eq = 3;
+ }
+
+message SortList {
+    base.SortDirection createdAt = 2;
+}
+
+message GetListProductRequest{
+    string query = 4;
+    FilterList filter = 1;
+    base.PaginationInput pagination = 2;
+    SortList sort = 3;
+
+}
+message GetListProductResponse{
+    repeated Product products = 1;
+    base.PaginationResponse pagination = 2;
+    int32 totalItem =3;
+
+}
+
+message UpdateProductRequest{
+    ProductRequest updateInput = 1;
+    string productId = 2;
+}
+
+message UpdateProductResponse{
+    bool success = 1;
+}
+
+message DeleteProductRequest{
+    string productId = 1;
+
+}
+
+message DeleteProductResponse{
+    bool success = 1;
+
+}
+
+message ProductRequest{
+    string name = 1;
+    string description = 2;
+    float price = 3;
+    int32 countInStock = 4;
+    string image = 5;
+    string video = 6;
+    string manufacturer = 7;
+    string modelNumber = 8;
+    string dimensions = 9;
+    string weight = 10;
+    string connectivity = 11;
+    string powerSource = 12;
+    string compatibility = 13;
+    string warranty = 14;
+    string type = 15;
+}
+
+message Product{
+    string name = 1;
+    string description = 2;
+    float price = 3;
+    int32 countInStock = 4;
+    string image = 5;
+    string video = 6;
+    string manufacturer = 7;
+    string modelNumber = 8;
+    string dimensions = 9;
+    string weight = 10;
+    string connectivity = 11;
+    string powerSource = 12;
+    string compatibility = 13;
+    string warranty = 14;
+    int32 totalLike = 15;
+    int32 totalComment = 16;
+    string _id = 17;
+    string type = 18;
+    int32 totalSold = 19;
+
+
+   //base
+   double createdAt = 20;
+   double  createdBy = 21;
+   double updatedAt = 22;
+   double  updatedBy = 23;
+   string deletedBy = 24;
+   double  deletedAt = 25;
+}
+//Payment
+message OrderItem {
+    string id = 1;
+    string name = 2;
+    string image = 3;
+    int32 quantity = 4;
+    int32 price = 55;
+}
+
+message CreatePaymentRequest{
+    string code = 1;
+    string description = 2;
+    string couponCode = 3;
+    repeated OrderItem items = 4;
+    PaymentMethod paymentMethod = 5;
+    PaymentType  paymentType = 6;
+    PaymentProvider paymentProvider =7;
+    string shippingAddress = 8;
+}
+
+message CreatePaymentResponse {
+    optional string redirectUrl = 1;
+    optional bool success = 2;
+}
+
+message CreateCommentRequest {
+    string message = 1;
+    string productId = 2;
+    string parentId = 3;
+}
+
+message CreateCommentResponse {
+    string message = 1;
+    string productId = 2;
+    string parentId = 3;
+    string _id = 4;
+    string userId = 5;
+    int32 countFeedback = 6;
+    
+    //base
+   double createdAt = 20;
+   double  createdBy = 21;
+   double updatedAt = 22;
+   double  updatedBy = 23;
+   string deletedBy = 24;
+   double  deletedAt = 25;
+
+}
+
+message ProductType {
+    string name = 1;
+    string _id = 2;
+}
+
+message ListTypeResponse {
+    repeated ProductType data = 1;
+}
+
+message  ListTypeRequest {
+}
+
+message ListCommentRequest{
+    string id = 1;
+}
+
+message OrderTransaction {
+    string gateway = 1;
+    string id = 2;
+    double time = 3;
+}
+
+message OrderDto {
+    string _id = 14;
+    string code = 1;
+    OrderStatus status = 2;
+    int32 amount = 3;
+    string description = 4;
+    string couponCode = 5;
+    int32 discountAmount = 6;
+    int32 subTotal = 7;
+    string userId = 8;
+    PaymentMethod paymentMethod = 9;
+    OrderTransaction transaction = 10;
+    repeated OrderItem items = 11;
+    ShippingStatus shippingStatus = 12;
+    string shippingAddress = 13;
+
+     //base
+   double createdAt = 20;
+   double  createdBy = 21;
+   double updatedAt = 22;
+   double  updatedBy = 23;
+   string deletedBy = 24;
+   double  deletedAt = 25;
+}
+
+message ListCommentResponse{
+    repeated CreateCommentResponse data = 1;
+}
+
+message ListOrderUserRequest {
+}
+message ListOrderAdminRequest {
+}
+
+message ListOrderResponse {
+    repeated OrderDto orders = 1;
+}
+message ListProductByIdsRequest{
+    repeated string ids = 1;
+}
+
+message ListProductByIdsResponse{
+    repeated Product data = 1;
+}
+
+message CallBackPaymentZaloRequest{
+    string data = 1;
+    string mac = 2;
+    int32 type = 3;
+}
+
+message CallBackPaymentZaloResponse{
+    int32 return_code = 1;
+    string return_message = 2;
+}
+
+message CallBackPaymentVNRequest{
+    string vnp_Amount = 13;
+    string vnp_BankCode = 12;
+    string vnp_BankTranNo = 11;
+    string vnp_CardType = 10;
+    string vnp_OrderInfo = 9;
+    string vnp_PayDate = 8;
+    string vnp_ResponseCode = 2;
+    string vnp_TmnCode = 3;
+    string vnp_TransactionNo = 4;
+    string vnp_TransactionStatus = 5;
+    string vnp_TxnRef = 6;
+    string vnp_SecureHash = 7;
+}
+
+message CallBackPaymentVNResponse{
+    string RspCode = 1;
+    string Message = 2;
+}
+
+message FavoriteProductRequest {
+    string productId = 1;
+}
+
+message IsFavoriteProductRequest {
+    string productId = 1;
+}
+
+message ConfirmOrderResquest {
+    string orderId = 1;
+}
+
+message  ConfirmOrderResponse {
+    bool success = 1;
+}
+
+message DetailOrderRequest {
+    string orderId = 1;
+}
+
+message DeleteTypeRequest {
+    string typeId = 1;
+}
+message DeleteTypeResponse {
+   bool success = 2;
+}
+
+enum PaymentMethod{
+    ONLINE = 0;
+    OFFLINE = 1;
+}
+
+enum PaymentType{
+    ATM = 0;
+    CC = 1;
+}
+
+enum PaymentProvider {
+    ZALOPAY=0;
+    VNPAY=1;
+}
+
+enum OrderStatus{
+    PENDING = 0;
+    FAILED = 1;
+    COMPLETED = 2;
+}
+
+enum ShippingStatus{
+    SHIPPED = 0;
+    SHIPPING = 1;
+    NOT_SHIPPED = 2;
+}
+
+message CartResponse {
+    string _id = 1;
+    int32 quantity = 5;
+    string userId = 6;
+    string productId = 7;
+    bool status = 8;
+    int32 price = 9;
+
+
+
+    
+     //base
+   double createdAt = 20;
+   double  createdBy = 21;
+   double updatedAt = 22;
+   double  updatedBy = 23;
+   string deletedBy = 24;
+   double  deletedAt = 25;
+}
+message AddToCartRequest {
+    int32 quantity = 1;
+    string productId = 3;
+   
+}
+message AddToCartResponse {
+   bool success = 1;
+}
+
+message RemoveFromCartRequest {
+    string _id = 1;
+}
+
+message RemoveFromCartResponse {
+   bool success = 1;
+}
+
+message ListCartRequest {
+}
+
+message ListCartResponse {
+    repeated CartResponse cart= 1;
+}
+message ClearCartRequest {
+}
+
+message ListFeedbackRequest {
+    string parentId = 1;
+
+}

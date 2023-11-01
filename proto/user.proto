@@ -1,0 +1,213 @@
+syntax = "proto3";
+package users;
+// import "base.proto";
+
+service UsersService{
+    //User
+    rpc RegisterUser(RegisterUserRequest) returns (RegisterUserResponse) {}
+    rpc GetUserByPhoneNumber(GetUserByPhoneNumberRequest) returns (ReadUserResponse){}
+    rpc VerifyPhone(VerifyPhoneRequest) returns (VerifyPhoneResponse){}
+    rpc ReadUser(ReadUserRequest) returns (ReadUserResponse) {}
+    rpc LoginOrCreateAccount(LoginOrCreateAccountRequest) returns (LoginOrCreateAccountResponse){}
+    rpc GetListUserByIds(GetListUserByIdsRequest) returns (GetListUserByIdsResponse){}
+    rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse) {}
+    rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse) {}
+    rpc UpdateAvatarUser (UpdateAvatarUserRequest) returns (UpdateAvatarUserResponse) {}
+    rpc ChangePasswordWhenLogin(ChangePasswordWhenLoginRequest) returns (ChangePasswordWhenLoginResponse) {}
+    rpc GetUserByEmail(GetUserByEmailRequest) returns (ReadUserResponse) {}
+    rpc ListUser(ListUserRequest) returns (ListUserResponse) {}
+    rpc LockOrUnLockUser(LockOrUnLockUserRequest) returns (LockOrUnLockUserResponse){}
+   
+    //Admin
+    rpc CreateAdmin (CreateAdminRequest) returns (CreateAdminResponse) {}
+    rpc GetAdminByUserName (GetAdminByUserNameRequest) returns (GetAdminByUserNameResponse) {}
+    rpc getIdAdmin (GetIdAdminRequest) returns (GetIdAdminResponse) {}
+}
+
+//User
+message RegisterUserRequest{
+    string fullName = 1;
+    string phoneNumber = 3;
+    string password = 4;
+}
+
+message RegisterUserResponse{
+    string _id = 1;
+    string fullName = 2;
+    string phoneNumber = 3;
+}
+
+message GetUserByPhoneNumberRequest{
+    string phoneNumber = 1;
+}
+
+message ReadUserResponse{
+    User user = 1;
+}
+
+message VerifyPhoneRequest{
+    string phoneNumber = 1;
+}
+
+message VerifyPhoneResponse{
+    bool verified = 1;
+}
+
+message ReadUserRequest{
+    string _id = 1;
+}
+
+message LoginOrCreateAccountRequest{
+    Provider provider = 1;
+    string accessToken = 2;
+} 
+
+message LoginOrCreateAccountResponse{
+    User user = 1;
+}
+//Admin
+message CreateAdminRequest {
+    string fullName = 1;
+    string password = 2;
+    string userName = 3;
+}
+
+message CreateAdminResponse {
+    bool success = 1;
+}
+
+
+
+//ENTITY
+message User {
+    string fullName = 1;
+    string email = 2;
+    string password = 3;
+    string phoneNumber = 4;
+    Provider provider = 5;
+    string providerId = 6;
+    bool verifyEmail = 7;
+    bool verifyPhone = 8;
+    bool verified= 9;
+    bool twoFactorAuthenticationSecret = 10;
+    Gender gender = 11;
+    double birthday = 12;
+    string address = 13;
+    string avatarId = 14;
+    string _id = 15;
+    bool active = 16;
+    
+    //base
+    double createdAt = 20;
+    string  createdBy = 21;
+    double updatedAt = 22;
+    string  updatedBy = 23;
+    string deletedBy = 24;
+    double  deletedAt = 25;
+}
+
+message GetListUserByIdsRequest{
+    repeated string ids = 1;
+}
+
+message GetListUserByIdsResponse{
+    repeated User user =1;
+}
+
+//ENUM
+enum Provider {
+    Facebook =0;
+    Google =1;
+    Apple =2;
+}
+
+enum Gender {
+    UNKNOWN = 0;
+    MALE = 1;
+    FEMALE = 2;
+}
+message ChangePasswordRequest {
+  string phoneNumber = 1;
+  string password = 2;
+}
+
+message ChangePasswordResponse {
+  bool updated = 1;
+}
+
+message UpdateProfileRequest {
+  string userId = 1;
+  string fullName = 2;
+  string email = 3;
+  Gender gender = 4;
+  string birthday = 5;
+  string address = 6;
+  string bio = 7;
+  string avatarId = 8;
+  string country = 9;
+}
+
+message UpdateProfileResponse {
+  bool updated = 1;
+}
+
+message UpdateAvatarUserRequest {
+  string avatarId = 1;
+}
+
+message UpdateAvatarUserResponse {
+  bool success = 1;
+}
+
+message ChangePasswordWhenLoginRequest {
+  string currentPassword = 1;
+  string newPassword = 2;
+}
+
+message ChangePasswordWhenLoginResponse {
+  bool changed = 1;
+}
+
+message Admin {
+  string fullName = 1;
+  string password = 2;
+  string userName = 3;
+
+  //base
+  double createdAt = 30;
+  double  createdBy = 31;
+  double updatedAt = 32;
+  double  updatedBy = 33;
+  string deletedBy = 34;
+  double  deletedAt = 35;
+  string _id = 36;
+}
+
+message GetAdminByUserNameRequest {
+  string userName = 1;
+}
+
+message GetAdminByUserNameResponse {
+  Admin admin = 1;
+}
+
+message GetUserByEmailRequest {
+  string email = 1;
+}
+message  GetIdAdminResponse {
+  string id = 1;
+}
+message GetIdAdminRequest {
+}
+
+message ListUserRequest {
+}
+message ListUserResponse {
+  repeated User user = 1;
+}
+message LockOrUnLockUserRequest {
+  string id = 1;
+}
+message LockOrUnLockUserResponse {
+  bool success = 1;
+}

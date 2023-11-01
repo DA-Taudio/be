@@ -1,0 +1,69 @@
+syntax = "proto3";
+package notification;
+import "base.proto";
+
+service NotificationService {
+  rpc CreateNotification(CreateNotificationRequest) returns (CreateNotificationResponse) {}
+  rpc GetListNotification(ListNotificationRequest) returns (ListNotificationResponse) {}
+  rpc ChangeStatusRead(ChangeStatusReadRequest) returns (ChangeStatusReadResponse) {}
+}
+message CreateNotificationRequest 
+{
+  string senderId = 1;
+  repeated string receiverId = 2;
+  string content = 4;
+  string referenceId = 5;
+}
+
+message CreateNotificationResponse 
+{
+  string _id =1;
+  string senderId = 2;
+  repeated string receiverId = 3;
+  string content = 5;
+  bool isRead = 6;
+   // Base fields
+   double createdAt = 7;
+   double updatedAt = 8;
+   string updatedBy = 9;
+   string deletedBy = 10;
+   double deletedAt = 11;
+   string createdBy = 12;
+   string referenceId = 13;
+}
+
+message PaginationResponse {
+  int32 currentPage = 1;
+  int32 totalPage = 2;
+  int32 pageSize = 3;
+}
+
+message PaginationInput {
+  int32 page = 1;
+  int32 limit = 2;
+  string after = 3;
+  string before = 4;
+}
+
+message ListNotificationRequest{
+  message SortNotification {
+    base.SortDirection createdAt =1;
+  }
+  SortNotification sort =3;
+  PaginationInput pagination = 1;
+}
+
+message ListNotificationResponse {
+  repeated CreateNotificationResponse data = 1;
+  int32 totalItem = 2;
+  PaginationResponse pagination = 3;
+}
+
+message ChangeStatusReadRequest {
+  repeated string id =1;
+}
+
+message ChangeStatusReadResponse {
+  bool success =1;
+}
+
