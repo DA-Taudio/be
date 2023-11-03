@@ -42,6 +42,14 @@ service ProductService{
     rpc RemoveFromCart(RemoveFromCartRequest) returns (RemoveFromCartResponse) {}
     rpc ListCart(ListCartRequest) returns (ListCartResponse) {}
     rpc clearCart(ClearCartRequest) returns (RemoveFromCartResponse) {}
+
+    //voucher
+    rpc createVoucher(CreateVoucherRequest) returns (VoucherResponse) {}
+    rpc updateVoucher(UpdateVoucherRequest) returns (base.BooleanPayload) {}
+    rpc deleteVoucher(DeleteVoucherRequest) returns (base.BooleanPayload) {}
+    rpc getVoucher(GetVoucherRequest) returns (VoucherResponse) {}
+    rpc listVoucher(ListVoucherRequest) returns (ListVoucherResponse) {}
+
 }
 
 message CreateProductRequest{
@@ -78,6 +86,8 @@ message FilterList{
     double price_lte = 1;
     double price_gte = 2;
     string type_eq = 3;
+    VoucherStatus status_eq = 4;
+     
  }
 
 message SortList {
@@ -413,5 +423,72 @@ message ClearCartRequest {
 
 message ListFeedbackRequest {
     string parentId = 1;
+}
 
+message VoucherResponse{
+    string code = 1;
+    int32 percent = 2;
+    int32 maxDiscount = 3;
+    int32 quantity = 4;
+    int32 maxUserUse = 5;
+    repeated string productIds = 6;
+    double startTime = 7;
+    double endTime = 8;
+
+       //base
+   double createdAt = 20;
+   double  createdBy = 21;
+   double updatedAt = 22;
+   double  updatedBy = 23;
+   string deletedBy = 24;
+   double  deletedAt = 25;
+}
+
+message CreateVoucherRequest{
+    string code = 1;
+    int32 percent = 2;
+    int32 maxDiscount = 3;
+    int32 quantity = 4;
+    int32 maxUserUse = 5;
+    repeated string productIds = 6;
+    double startTime = 7;
+    double endTime = 8;
+}
+
+message UpdateVoucherRequest{
+    string _id = 9;
+    string code = 1;
+    int32 percent = 2;
+    int32 maxDiscount = 3;
+    int32 quantity = 4;
+    int32 maxUserUse = 5;
+    repeated string productIds = 6;
+    double startTime = 7;
+    double endTime = 8;
+}
+
+message GetVoucherRequest{
+    string _id = 9;
+}
+
+message DeleteVoucherRequest{
+    string _id = 9;
+}
+
+message ListVoucherRequest{
+    string query = 4;
+    FilterList filter = 1;
+    base.PaginationInput pagination = 2;
+}
+
+message ListVoucherResponse{
+    repeated VoucherResponse vouchers = 1;
+    base.PaginationResponse pagination = 2;
+    int32 totalItem =3;
+}
+
+enum VoucherStatus {
+    UPCOMING = 0;
+    EXPIRED = 1;
+    APPLYING = 2;
 }

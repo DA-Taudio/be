@@ -40,6 +40,12 @@ export enum ShippingStatus {
   NOT_SHIPPED = 'NOT_SHIPPED',
 }
 
+export enum VoucherStatus {
+  UPCOMING = 'UPCOMING',
+  EXPIRED = 'EXPIRED',
+  APPLYING = 'APPLYING',
+}
+
 export interface CreateProductRequest {
   name: string;
   description: string;
@@ -74,6 +80,7 @@ export interface FilterList {
   price_lte: number;
   price_gte: number;
   type_eq: string;
+  status_eq: VoucherStatus;
 }
 
 export interface SortList {
@@ -373,6 +380,67 @@ export interface ListFeedbackRequest {
   parentId: string;
 }
 
+export interface VoucherResponse {
+  code: string;
+  percent: number;
+  maxDiscount: number;
+  quantity: number;
+  maxUserUse: number;
+  productIds: string[];
+  startTime: number;
+  endTime: number;
+  /** base */
+  createdAt: number;
+  createdBy: number;
+  updatedAt: number;
+  updatedBy: number;
+  deletedBy: string;
+  deletedAt: number;
+}
+
+export interface CreateVoucherRequest {
+  code: string;
+  percent: number;
+  maxDiscount: number;
+  quantity: number;
+  maxUserUse: number;
+  productIds: string[];
+  startTime: number;
+  endTime: number;
+}
+
+export interface UpdateVoucherRequest {
+  _id: string;
+  code: string;
+  percent: number;
+  maxDiscount: number;
+  quantity: number;
+  maxUserUse: number;
+  productIds: string[];
+  startTime: number;
+  endTime: number;
+}
+
+export interface GetVoucherRequest {
+  _id: string;
+}
+
+export interface DeleteVoucherRequest {
+  _id: string;
+}
+
+export interface ListVoucherRequest {
+  query: string;
+  filter: FilterList | undefined;
+  pagination: PaginationInput | undefined;
+}
+
+export interface ListVoucherResponse {
+  vouchers: VoucherResponse[];
+  pagination: PaginationResponse | undefined;
+  totalItem: number;
+}
+
 export const PRODUCT_PACKAGE_NAME = 'product';
 
 export interface ProductServiceClient {
@@ -510,6 +578,33 @@ export interface ProductServiceClient {
     request: ClearCartRequest,
     metadata?: Metadata,
   ): Observable<RemoveFromCartResponse>;
+
+  /** voucher */
+
+  createVoucher(
+    request: CreateVoucherRequest,
+    metadata?: Metadata,
+  ): Observable<VoucherResponse>;
+
+  updateVoucher(
+    request: UpdateVoucherRequest,
+    metadata?: Metadata,
+  ): Observable<BooleanPayload>;
+
+  deleteVoucher(
+    request: DeleteVoucherRequest,
+    metadata?: Metadata,
+  ): Observable<BooleanPayload>;
+
+  getVoucher(
+    request: GetVoucherRequest,
+    metadata?: Metadata,
+  ): Observable<VoucherResponse>;
+
+  listVoucher(
+    request: ListVoucherRequest,
+    metadata?: Metadata,
+  ): Observable<ListVoucherResponse>;
 }
 
 export interface ProductServiceController {
@@ -713,6 +808,36 @@ export interface ProductServiceController {
     | Promise<RemoveFromCartResponse>
     | Observable<RemoveFromCartResponse>
     | RemoveFromCartResponse;
+
+  /** voucher */
+
+  createVoucher(
+    request: CreateVoucherRequest,
+    metadata?: Metadata,
+  ): Promise<VoucherResponse> | Observable<VoucherResponse> | VoucherResponse;
+
+  updateVoucher(
+    request: UpdateVoucherRequest,
+    metadata?: Metadata,
+  ): Promise<BooleanPayload> | Observable<BooleanPayload> | BooleanPayload;
+
+  deleteVoucher(
+    request: DeleteVoucherRequest,
+    metadata?: Metadata,
+  ): Promise<BooleanPayload> | Observable<BooleanPayload> | BooleanPayload;
+
+  getVoucher(
+    request: GetVoucherRequest,
+    metadata?: Metadata,
+  ): Promise<VoucherResponse> | Observable<VoucherResponse> | VoucherResponse;
+
+  listVoucher(
+    request: ListVoucherRequest,
+    metadata?: Metadata,
+  ):
+    | Promise<ListVoucherResponse>
+    | Observable<ListVoucherResponse>
+    | ListVoucherResponse;
 }
 
 export function ProductServiceControllerMethods() {
@@ -743,6 +868,11 @@ export function ProductServiceControllerMethods() {
       'removeFromCart',
       'listCart',
       'clearCart',
+      'createVoucher',
+      'updateVoucher',
+      'deleteVoucher',
+      'getVoucher',
+      'listVoucher',
     ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(
