@@ -405,8 +405,8 @@ export interface CreateVoucherRequest {
   quantity: number;
   maxUserUse: number;
   productIds: string[];
-  startTime: number;
-  endTime: number;
+  startTime: string;
+  endTime: string;
 }
 
 export interface UpdateVoucherRequest {
@@ -417,8 +417,8 @@ export interface UpdateVoucherRequest {
   quantity: number;
   maxUserUse: number;
   productIds: string[];
-  startTime: number;
-  endTime: number;
+  startTime: string;
+  endTime: string;
 }
 
 export interface GetVoucherRequest {

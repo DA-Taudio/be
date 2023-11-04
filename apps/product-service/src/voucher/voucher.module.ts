@@ -31,4 +31,4 @@ import { VoucherController } from './voucher.controller';
     AppMetadata,
   ],
 })
-export class TypeModule {}
+export class VoucherModule {}

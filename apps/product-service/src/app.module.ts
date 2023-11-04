@@ -6,6 +6,7 @@ import { ProductModule } from './product/product.module';
 import { PaymentModule } from './payment/payment.module';
 import { CommentModule } from './comment/comment.module';
 import { TypeModule } from './type/type.module';
+import { VoucherModule } from './voucher/voucher.module';
 
 @Global()
 @Module({
@@ -19,6 +20,7 @@ import { TypeModule } from './type/type.module';
     PaymentModule,
     CommentModule,
     TypeModule,
+    VoucherModule,
   ],
   providers: [AppMetadata],
 })

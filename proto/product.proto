@@ -451,8 +451,8 @@ message CreateVoucherRequest{
     int32 quantity = 4;
     int32 maxUserUse = 5;
     repeated string productIds = 6;
-    double startTime = 7;
-    double endTime = 8;
+    string startTime = 7;
+    string endTime = 8;
 }
 
 message UpdateVoucherRequest{
@@ -463,8 +463,8 @@ message UpdateVoucherRequest{
     int32 quantity = 4;
     int32 maxUserUse = 5;
     repeated string productIds = 6;
-    double startTime = 7;
-    double endTime = 8;
+    string startTime = 7;
+    string endTime = 8;
 }
 
 message GetVoucherRequest{
