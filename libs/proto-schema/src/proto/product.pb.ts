@@ -441,6 +441,24 @@ export interface ListVoucherResponse {
   totalItem: number;
 }
 
+export interface ApplyVouchersRequest {
+  couponCode: string[];
+  items: OrderItem[];
+}
+
+export interface InfoApply {
+  code: string;
+  reducedAmount: number;
+  voucherId: string;
+}
+
+export interface ApplyVouchersResponse {
+  discountAmount: number;
+  info: InfoApply[];
+  totalPayment: number;
+  items: OrderItem[];
+}
+
 export const PRODUCT_PACKAGE_NAME = 'product';
 
 export interface ProductServiceClient {
@@ -605,6 +623,11 @@ export interface ProductServiceClient {
     request: ListVoucherRequest,
     metadata?: Metadata,
   ): Observable<ListVoucherResponse>;
+
+  applyVouchers(
+    request: ApplyVouchersRequest,
+    metadata?: Metadata,
+  ): Observable<ApplyVouchersResponse>;
 }
 
 export interface ProductServiceController {
@@ -838,6 +861,14 @@ export interface ProductServiceController {
     | Promise<ListVoucherResponse>
     | Observable<ListVoucherResponse>
     | ListVoucherResponse;
+
+  applyVouchers(
+    request: ApplyVouchersRequest,
+    metadata?: Metadata,
+  ):
+    | Promise<ApplyVouchersResponse>
+    | Observable<ApplyVouchersResponse>
+    | ApplyVouchersResponse;
 }
 
 export function ProductServiceControllerMethods() {
@@ -873,6 +904,7 @@ export function ProductServiceControllerMethods() {
       'deleteVoucher',
       'getVoucher',
       'listVoucher',
+      'applyVouchers',
     ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(

@@ -43,7 +43,7 @@ export class CreatePaymentHandler
 
     await Promise.all(
       items.map(async (item: any) => {
-        const { id, quantity, name, image, price } = item;
+        const { id, quantity } = item;
         const product = await this._productRepository.findById(id);
 
         if (!product) {

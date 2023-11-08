@@ -49,7 +49,7 @@ service ProductService{
     rpc deleteVoucher(DeleteVoucherRequest) returns (base.BooleanPayload) {}
     rpc getVoucher(GetVoucherRequest) returns (VoucherResponse) {}
     rpc listVoucher(ListVoucherRequest) returns (ListVoucherResponse) {}
-
+    rpc applyVouchers(ApplyVouchersRequest) returns (ApplyVouchersResponse) {}
 }
 
 message CreateProductRequest{
@@ -485,6 +485,24 @@ message ListVoucherResponse{
     repeated VoucherResponse vouchers = 1;
     base.PaginationResponse pagination = 2;
     int32 totalItem =3;
+}
+
+message ApplyVouchersRequest{
+    repeated string couponCode = 3;
+    repeated OrderItem items = 4;
+}
+
+message InfoApply{
+    string code = 1;
+    int32  reducedAmount = 3;
+    string voucherId = 5;
+}
+
+message ApplyVouchersResponse{
+    int64 discountAmount = 1;
+    repeated InfoApply info = 2;
+    int64 totalPayment = 3;
+    repeated OrderItem items = 4;
 }
 
 enum VoucherStatus {
