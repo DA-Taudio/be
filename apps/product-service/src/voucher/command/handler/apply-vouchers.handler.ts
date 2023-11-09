@@ -30,6 +30,8 @@ export class ApplyVouchersHandler
     if (data.length !== couponCode.length)
       throw new RpcException('Voucher không hợp lệ!');
 
+    console.log(data);
+
     await Promise.all(
       items.map(async (item: any) => {
         const { id, quantity } = item;

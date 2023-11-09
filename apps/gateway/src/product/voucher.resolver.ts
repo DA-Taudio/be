@@ -1,5 +1,6 @@
 import { AppMetadata, BooleanPayload } from '@app/core';
 import {
+  ApplyVouchersRequest,
   CreateVoucherRequest,
   DeleteVoucherRequest,
   GetVoucherRequest,
@@ -12,12 +13,17 @@ import { Inject } from '@nestjs/common';
 import { Args, Query, Mutation } from '@nestjs/graphql';
 import { ClientGrpc } from '@nestjs/microservices';
 import {
+  ApplyVouchersInput,
   CreateVoucherInput,
   ListVoucherInput,
   ReadVoucherInput,
   UpdateVoucherInput,
 } from './input';
-import { ListVoucherResponse, VoucherResponse } from './type';
+import {
+  ApplyVouchersResponse,
+  ListVoucherResponse,
+  VoucherResponse,
+} from './type';
 
 export class VoucherResolver {
   private productService: ProductServiceClient;
@@ -27,6 +33,13 @@ export class VoucherResolver {
   ) {
     this.productService =
       productClient.getService<ProductServiceClient>(PRODUCT_SERVICE_NAME);
+  }
+
+  @Mutation(() => ApplyVouchersResponse)
+  async applyVouchers(@Args('input') input: ApplyVouchersInput) {
+    return await this.productService.applyVouchers(
+      input as ApplyVouchersRequest,
+    );
   }
 
   @Mutation(() => VoucherResponse)

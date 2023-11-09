@@ -13,6 +13,7 @@ import { PubSubModule } from '@app/core';
 import { CommentResolver } from './comment.resolver';
 import { CommentService } from './comment.service';
 import { TypeResolver } from './type.resolver';
+import { VoucherResolver } from './voucher.resolver';
 
 @Module({
   imports: [PubSubModule],
@@ -25,6 +26,7 @@ import { TypeResolver } from './type.resolver';
     TypeResolver,
     ListProductByIdsResolver,
     OrderDtoResolver,
+    VoucherResolver,
     // CartTypeResolver,
   ],
 })

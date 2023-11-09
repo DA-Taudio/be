@@ -5,6 +5,7 @@ import {
   CommentEntity,
   ConfirmConversationEntity,
   ConversationEntity,
+  HistoryVoucherEntity,
   MediaEntity,
   MessageEntity,
   NotificationEntity,
@@ -13,6 +14,7 @@ import {
   ProductFavoriteEntity,
   TypeEntity,
   UserEntity,
+  VoucherEntity,
 } from '../entities';
 import { Injectable } from '@nestjs/common';
 import { CartEntity, OrderEntity } from '../entities/cart';
@@ -40,6 +42,8 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
         ProductFavoriteEntity,
         CartEntity,
         NotificationEntity,
+        HistoryVoucherEntity,
+        VoucherEntity,
       ],
       useNewUrlParser: true,
       useUnifiedTopology: true,

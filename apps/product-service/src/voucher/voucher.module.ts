@@ -13,6 +13,7 @@ import {
   VoucherRepository,
 } from './voucher.repository';
 import { VoucherController } from './voucher.controller';
+import { ProductRepository } from '../product/product.repository';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { VoucherController } from './voucher.controller';
       VoucherRepository,
       HistoryVoucherEntity,
       HistoryVoucherRepository,
+      ProductRepository,
     ]),
   ],
   controllers: [VoucherController],

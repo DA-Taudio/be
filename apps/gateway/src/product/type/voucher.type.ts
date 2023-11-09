@@ -43,3 +43,47 @@ export class ListVoucherResponse {
   @Field(() => PaginationResponse, { nullable: true })
   pagination: PaginationResponse;
 }
+@ObjectType()
+export class InfoApply {
+  @Field(() => String, { nullable: true })
+  code: string;
+
+  @Field(() => Number, { nullable: true })
+  reducedAmount: number;
+
+  @Field(() => String, { nullable: true })
+  voucherId: string;
+}
+
+@ObjectType()
+export class OrderItemType {
+  @Field(() => String)
+  id: string;
+
+  @Field(() => String)
+  name: string;
+
+  @Field(() => String)
+  image: string;
+
+  @Field(() => Number)
+  quantity: number;
+
+  @Field(() => Number)
+  price: number;
+}
+
+@ObjectType()
+export class ApplyVouchersResponse {
+  @Field(() => Number)
+  discountAmount: number;
+
+  @Field(() => [InfoApply])
+  info: InfoApply[];
+
+  @Field(() => Number)
+  totalPayment: number;
+
+  @Field(() => [OrderItemType])
+  items: OrderItemType[];
+}

@@ -1,10 +1,16 @@
-import { PaginationBaseInput, VoucherStatus } from '@app/core';
+import {
+  CouponCodeValidator,
+  OrderItem,
+  PaginationBaseInput,
+  VoucherStatus,
+} from '@app/core';
 import { Field, InputType } from '@nestjs/graphql';
-import { IsNotEmpty } from 'class-validator';
+import { ArrayMinSize, IsNotEmpty, Validate } from 'class-validator';
 
 @InputType()
 export class CreateVoucherInput {
   @Field(() => String)
+  @Validate(CouponCodeValidator)
   @IsNotEmpty()
   code: string;
 
@@ -67,4 +73,14 @@ export class ListVoucherInput {
 
   @Field(() => String, { nullable: true })
   query: string;
+}
+
+@InputType()
+export class ApplyVouchersInput {
+  @Field(() => [String])
+  @ArrayMinSize(1)
+  couponCode: string[];
+
+  @Field(() => [OrderItem], { nullable: true })
+  items: OrderItem[];
 }
