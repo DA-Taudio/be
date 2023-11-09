@@ -1,5 +1,6 @@
 import { AppMetadata } from '@app/core';
 import {
+  ApplyVouchersRequest,
   CreateVoucherRequest,
   DeleteVoucherRequest,
   ListVoucherRequest,
@@ -8,7 +9,11 @@ import {
 import { Controller } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GrpcMethod } from '@nestjs/microservices';
-import { CreateVoucherCommand, DeleteVoucherCommand } from './command';
+import {
+  ApplyVouchersCommand,
+  CreateVoucherCommand,
+  DeleteVoucherCommand,
+} from './command';
 import { ListVoucherQuery } from './query';
 
 @Controller()
@@ -18,17 +23,22 @@ export class VoucherController {
     private readonly queryBus: QueryBus,
     private readonly appMetadata: AppMetadata,
   ) {}
-  @GrpcMethod(PRODUCT_SERVICE_NAME, 'CreateVoucher')
+  @GrpcMethod(PRODUCT_SERVICE_NAME, 'createVoucher')
   async createVoucher(input: CreateVoucherRequest) {
     return await this.commandBus.execute(new CreateVoucherCommand(input));
   }
 
-  @GrpcMethod(PRODUCT_SERVICE_NAME, 'ListVoucher')
+  @GrpcMethod(PRODUCT_SERVICE_NAME, 'listVoucher')
   async listVoucher(input: ListVoucherRequest) {
     return await this.queryBus.execute(new ListVoucherQuery(input));
   }
-  @GrpcMethod(PRODUCT_SERVICE_NAME, 'DeleteVoucher')
+  @GrpcMethod(PRODUCT_SERVICE_NAME, 'deleteVoucher')
   async deleteVoucher(input: DeleteVoucherRequest) {
     return await this.commandBus.execute(new DeleteVoucherCommand(input));
+  }
+
+  @GrpcMethod(PRODUCT_SERVICE_NAME, 'applyVouchers')
+  async applyVouchers(input: ApplyVouchersRequest) {
+    return await this.commandBus.execute(new ApplyVouchersCommand(input));
   }
 }

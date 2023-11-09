@@ -23,7 +23,7 @@ export class CreateVoucherHandler
       },
     });
     if (voucherExist) {
-      throw new RpcException('Voucher đã tồn tại!');
+      throw new RpcException('Mã voucher đã tồn tại!');
     }
     const voucher = await this._voucherRepository.save(cmd);
     return voucher as unknown as VoucherResponse;

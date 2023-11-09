@@ -434,6 +434,7 @@ message VoucherResponse{
     repeated string productIds = 6;
     double startTime = 7;
     double endTime = 8;
+    string _id = 9;
 
        //base
    double createdAt = 20;

@@ -27,12 +27,15 @@ import {
 
 export class VoucherResolver {
   private productService: ProductServiceClient;
+
   constructor(
-    @Inject(PRODUCT_SERVICE_NAME) private readonly productClient: ClientGrpc,
+    @Inject(PRODUCT_SERVICE_NAME) private readonly _productClient: ClientGrpc,
     private readonly metadata: AppMetadata,
   ) {
     this.productService =
-      productClient.getService<ProductServiceClient>(PRODUCT_SERVICE_NAME);
+      this._productClient.getService<ProductServiceClient>(
+        PRODUCT_SERVICE_NAME,
+      );
   }
 
   @Mutation(() => ApplyVouchersResponse)

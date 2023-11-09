@@ -389,6 +389,7 @@ export interface VoucherResponse {
   productIds: string[];
   startTime: number;
   endTime: number;
+  _id: string;
   /** base */
   createdAt: number;
   createdBy: number;
