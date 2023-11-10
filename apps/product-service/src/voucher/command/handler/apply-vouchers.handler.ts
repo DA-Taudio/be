@@ -2,7 +2,10 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { TypeEntity, VoucherEntity } from '@app/core';
 import { ApplyVouchersResponse } from '@app/proto-schema/proto/product.pb';
 import { RpcException } from '@nestjs/microservices';
-import { VoucherRepository } from '../../voucher.repository';
+import {
+  HistoryVoucherRepository,
+  VoucherRepository,
+} from '../../voucher.repository';
 import { ApplyVouchersCommand } from '../impl';
 import { ProductRepository } from 'apps/product-service/src/product/product.repository';
 
@@ -13,9 +16,15 @@ export class ApplyVouchersHandler
   constructor(
     private readonly _voucherRepository: VoucherRepository,
     private readonly _productRepository: ProductRepository,
+    private readonly _historyVoucherRepository: HistoryVoucherRepository,
   ) {}
-  async execute({ cmd }: ApplyVouchersCommand): Promise<ApplyVouchersResponse> {
+  async execute({
+    cmd,
+    userId,
+  }: ApplyVouchersCommand): Promise<ApplyVouchersResponse> {
     let amount;
+    let reducedAmount = 0;
+    let discountAmount = 0;
     let newItems = [];
     const { couponCode, items } = cmd;
     const data = await this._voucherRepository.find({
@@ -30,7 +39,17 @@ export class ApplyVouchersHandler
     if (data.length !== couponCode.length)
       throw new RpcException('Voucher không hợp lệ!');
 
-    console.log(data);
+    const [dataUse, countUse] =
+      await this._historyVoucherRepository.findAndCount({
+        where: {
+          userId,
+          voucherId: data[0]._id.toString(),
+          deletedAt: null,
+        },
+      });
+
+    if (countUse === data[0].maxUserUse)
+      throw new RpcException('Bạn đã hết lượt sử dụng voucher !');
 
     await Promise.all(
       items.map(async (item: any) => {
@@ -43,17 +62,25 @@ export class ApplyVouchersHandler
         item.name = product.name;
         item.price = product.price;
         amount += product.price * quantity;
+        if (data[0].productIds.includes(id)) {
+          reducedAmount += (data[0].percent * product.price * quantity) / 100;
+        }
         newItems.push(item);
       }),
     );
+    reducedAmount =
+      reducedAmount >= data[0].maxDiscount
+        ? data[0].maxDiscount
+        : reducedAmount;
 
+    discountAmount = reducedAmount;
     return {
-      discountAmount: 0,
+      discountAmount,
       info: [
         {
-          code: '',
-          reducedAmount: 0,
-          voucherId: '',
+          code: data[0].code,
+          reducedAmount,
+          voucherId: data[0]._id,
         },
       ],
       totalPayment: amount,

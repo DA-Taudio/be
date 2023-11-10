@@ -15,6 +15,7 @@ import {
   DeleteVoucherCommand,
 } from './command';
 import { ListVoucherQuery } from './query';
+import { Metadata } from '@grpc/grpc-js';
 
 @Controller()
 export class VoucherController {
@@ -38,7 +39,9 @@ export class VoucherController {
   }
 
   @GrpcMethod(PRODUCT_SERVICE_NAME, 'applyVouchers')
-  async applyVouchers(input: ApplyVouchersRequest) {
-    return await this.commandBus.execute(new ApplyVouchersCommand(input));
+  async applyVouchers(input: ApplyVouchersRequest, metadata: Metadata) {
+    return await this.commandBus.execute(
+      new ApplyVouchersCommand(input, this.appMetadata.getUserId(metadata)),
+    );
   }
 }

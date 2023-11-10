@@ -1,4 +1,4 @@
-import { BaseRepository, ProductEntity } from '@app/core';
+import { BaseRepository, HistoryVoucherEntity, ProductEntity } from '@app/core';
 import { EntityRepository } from 'typeorm';
 @EntityRepository(ProductEntity)
 export class ProductRepository extends BaseRepository<ProductEntity> {
