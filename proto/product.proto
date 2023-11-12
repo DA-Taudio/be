@@ -263,7 +263,7 @@ message OrderDto {
     repeated OrderItem items = 11;
     ShippingStatus shippingStatus = 12;
     string shippingAddress = 13;
-    InfoApply infoCouponCode = 15;
+    repeated InfoApply infoCouponCode = 15;
 
      //base
    double createdAt = 20;

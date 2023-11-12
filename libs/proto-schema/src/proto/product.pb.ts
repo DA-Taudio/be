@@ -249,7 +249,7 @@ export interface OrderDto {
   items: OrderItem[];
   shippingStatus: ShippingStatus;
   shippingAddress: string;
-  infoCouponCode: InfoApply | undefined;
+  infoCouponCode: InfoApply[];
   /** base */
   createdAt: number;
   createdBy: number;

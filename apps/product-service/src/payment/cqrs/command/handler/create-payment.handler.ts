@@ -54,6 +54,7 @@ export class CreatePaymentHandler
       paymentMethod,
       shippingStatus: ShippingStatus.NOT_SHIPPED,
       shippingAddress,
+      infoCouponCode,
     };
     //Thanh toán online
     if (paymentMethod === PaymentMethod.ONLINE) {
