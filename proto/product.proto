@@ -50,6 +50,11 @@ service ProductService{
     rpc getVoucher(GetVoucherRequest) returns (VoucherResponse) {}
     rpc listVoucher(ListVoucherRequest) returns (ListVoucherResponse) {}
     rpc applyVouchers(ApplyVouchersRequest) returns (ApplyVouchersResponse) {}
+
+    //History Voucher
+    rpc createHistoryVoucher(CreateHistoryVoucherRequest) returns (HistoryVoucherResponse){}
+    rpc deleteHistoryVoucher(DeleteHistoryVoucherRequest) returns (base.BooleanPayload){}
+
 }
 
 message CreateProductRequest{
@@ -194,10 +199,11 @@ message CreatePaymentRequest{
     PaymentType  paymentType = 6;
     PaymentProvider paymentProvider =7;
     string shippingAddress = 8;
-    InfoApply infoCouponCode = 10;
+    repeated InfoApply infoCouponCode = 10;
 }
 
 message CreatePaymentResponse {
+    string orderId=3;
     optional string redirectUrl = 1;
     optional bool success = 2;
 }
@@ -513,4 +519,21 @@ enum VoucherStatus {
     UPCOMING = 0;
     EXPIRED = 1;
     APPLYING = 2;
+}
+message HistoryVoucherResponse{
+    string voucherId = 1;
+    string userId = 2;
+    string orderId = 3;
+    int32 reducedAmount = 4;
+    string _id = 5;
+}
+
+message CreateHistoryVoucherRequest{
+    string voucherId = 1;
+    string userId = 2;
+    string orderId = 3;
+    int32 reducedAmount = 4;
+}
+message DeleteHistoryVoucherRequest{
+    string historyVoucherId = 1;
 }

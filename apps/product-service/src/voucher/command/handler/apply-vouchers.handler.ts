@@ -47,8 +47,18 @@ export class ApplyVouchersHandler
           deletedAt: null,
         },
       });
+    if (countUse === data[0].quantity)
+      throw new RpcException('Voucher đã hết !');
 
-    if (countUse === data[0].maxUserUse)
+    const [dataUserUse, countUserUse] =
+      await this._historyVoucherRepository.findAndCount({
+        where: {
+          userId,
+          voucherId: data[0]._id.toString(),
+          deletedAt: null,
+        },
+      });
+    if (countUserUse === data[0].maxUserUse)
       throw new RpcException('Bạn đã hết lượt sử dụng voucher !');
 
     await Promise.all(

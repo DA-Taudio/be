@@ -183,10 +183,11 @@ export interface CreatePaymentRequest {
   paymentType: PaymentType;
   paymentProvider: PaymentProvider;
   shippingAddress: string;
-  infoCouponCode: InfoApply | undefined;
+  infoCouponCode: InfoApply[];
 }
 
 export interface CreatePaymentResponse {
+  orderId: string;
   redirectUrl?: string | undefined;
   success?: boolean | undefined;
 }
@@ -463,6 +464,25 @@ export interface ApplyVouchersResponse {
   items: OrderItem[];
 }
 
+export interface HistoryVoucherResponse {
+  voucherId: string;
+  userId: string;
+  orderId: string;
+  reducedAmount: number;
+  _id: string;
+}
+
+export interface CreateHistoryVoucherRequest {
+  voucherId: string;
+  userId: string;
+  orderId: string;
+  reducedAmount: number;
+}
+
+export interface DeleteHistoryVoucherRequest {
+  historyVoucherId: string;
+}
+
 export const PRODUCT_PACKAGE_NAME = 'product';
 
 export interface ProductServiceClient {
@@ -632,6 +652,18 @@ export interface ProductServiceClient {
     request: ApplyVouchersRequest,
     metadata?: Metadata,
   ): Observable<ApplyVouchersResponse>;
+
+  /** History Voucher */
+
+  createHistoryVoucher(
+    request: CreateHistoryVoucherRequest,
+    metadata?: Metadata,
+  ): Observable<HistoryVoucherResponse>;
+
+  deleteHistoryVoucher(
+    request: DeleteHistoryVoucherRequest,
+    metadata?: Metadata,
+  ): Observable<BooleanPayload>;
 }
 
 export interface ProductServiceController {
@@ -873,6 +905,21 @@ export interface ProductServiceController {
     | Promise<ApplyVouchersResponse>
     | Observable<ApplyVouchersResponse>
     | ApplyVouchersResponse;
+
+  /** History Voucher */
+
+  createHistoryVoucher(
+    request: CreateHistoryVoucherRequest,
+    metadata?: Metadata,
+  ):
+    | Promise<HistoryVoucherResponse>
+    | Observable<HistoryVoucherResponse>
+    | HistoryVoucherResponse;
+
+  deleteHistoryVoucher(
+    request: DeleteHistoryVoucherRequest,
+    metadata?: Metadata,
+  ): Promise<BooleanPayload> | Observable<BooleanPayload> | BooleanPayload;
 }
 
 export function ProductServiceControllerMethods() {
@@ -909,6 +956,8 @@ export function ProductServiceControllerMethods() {
       'getVoucher',
       'listVoucher',
       'applyVouchers',
+      'createHistoryVoucher',
+      'deleteHistoryVoucher',
     ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(

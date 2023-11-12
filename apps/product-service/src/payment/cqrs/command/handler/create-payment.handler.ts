@@ -40,7 +40,6 @@ export class CreatePaymentHandler
       infoCouponCode,
     } = cmd;
     const newItems = [];
-
     const amountAfterDiscount = amount - discountAmount;
 
     const order = {
@@ -57,25 +56,27 @@ export class CreatePaymentHandler
       infoCouponCode,
     };
     //Thanh toán online
-    if (paymentMethod === PaymentMethod.ONLINE) {
-      const orderUser = await this._orderRepository.save(
+    if (paymentMethod === PaymentMethod.ONLINE && amount > 0) {
+      const orderOn = await this._orderRepository.save(
         new OrderEntity({ ...order }),
       );
 
       if (paymentProvider === PaymentProvider.ZALOPAY) {
         const { returnUrl } = await this._zaloPayService.createPaymentURL(
-          orderUser,
+          orderOn,
           paymentType,
         );
         return {
+          orderId: orderOn._id,
           redirectUrl: returnUrl,
         };
       }
       if (paymentProvider === PaymentProvider.VNPAY) {
         const { returnUrl } = await this._vnPayService.createPaymentURL(
-          orderUser,
+          orderOn,
         );
         return {
+          orderId: orderOn._id,
           redirectUrl: returnUrl,
         };
       }
@@ -92,7 +93,7 @@ export class CreatePaymentHandler
       throw new RpcException('Đơn hàng đã được xử lý trước đó !');
     }
 
-    await this._orderRepository.save(
+    const orderOff = await this._orderRepository.save(
       new OrderEntity({
         ...order,
       }),
@@ -108,6 +109,9 @@ export class CreatePaymentHandler
       }),
     );
 
-    return { success: true };
+    return {
+      orderId: orderOff._id,
+      success: true,
+    };
   }
 }

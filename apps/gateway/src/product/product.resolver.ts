@@ -116,15 +116,25 @@ export class ProductResolver {
       { couponCode, items: inputPayment.items },
       _id,
     );
-    return await this._productService.createPayment(
-      {
-        ...input,
-        discountAmount: data.discountAmount,
-        amount: data.discountAmount,
-        infoCouponCode: data.info,
-      },
-      _id,
-    );
+    const { orderId, ...dataPayment } =
+      await this._productService.createPayment(
+        {
+          ...input,
+          discountAmount: data.discountAmount,
+          amount: data.totalPayment,
+          infoCouponCode: data.info,
+        },
+        _id,
+      );
+    if (dataPayment && data) {
+      await this._productService.createHistoryVoucher({
+        voucherId: data.info[0].voucherId,
+        userId: _id,
+        orderId,
+        reducedAmount: data.totalPayment - data.discountAmount,
+      });
+    }
+    return dataPayment;
   }
 
   @Query(() => ListOrderResponse)

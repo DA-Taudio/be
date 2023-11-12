@@ -1,5 +1,6 @@
 import {
   ApplyVouchersRequest,
+  CreateHistoryVoucherRequest,
   CreatePaymentRequest,
   CreateProductRequest,
   CreateProductResponse,
@@ -317,5 +318,18 @@ export class ProductService {
     pdfDoc.end();
 
     return { pdfPath: path };
+  }
+
+  /**
+   * create Payment function
+   * @param input
+   * @returns
+   */
+  async createHistoryVoucher(input: any) {
+    return await firstValueFrom(
+      this.productService.createHistoryVoucher(
+        input as unknown as CreateHistoryVoucherRequest,
+      ),
+    );
   }
 }
