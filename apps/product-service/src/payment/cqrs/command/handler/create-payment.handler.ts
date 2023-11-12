@@ -28,33 +28,19 @@ export class CreatePaymentHandler
     userId,
   }: CreatePaymentCommand): Promise<CreatePaymentResponse> {
     const {
+      discountAmount,
+      amount,
       code,
       description,
-      couponCode,
       items,
       paymentMethod,
       paymentType,
       paymentProvider,
       shippingAddress,
+      infoCouponCode,
     } = cmd;
-    let amount = 0;
     const newItems = [];
-    const discountAmount = 0; // xử lý bởi couponCode
 
-    await Promise.all(
-      items.map(async (item: any) => {
-        const { id, quantity } = item;
-        const product = await this._productRepository.findById(id);
-
-        if (!product) {
-          throw new RpcException('Sản phẩm không tồn tại !');
-        }
-        item.name = product.name;
-        item.price = product.price;
-        amount += product.price * quantity;
-        newItems.push(item);
-      }),
-    );
     const amountAfterDiscount = amount - discountAmount;
 
     const order = {
@@ -65,7 +51,6 @@ export class CreatePaymentHandler
       userId,
       discountAmount,
       subTotal: amount,
-      couponCode,
       paymentMethod,
       shippingStatus: ShippingStatus.NOT_SHIPPED,
       shippingAddress,

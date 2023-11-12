@@ -222,9 +222,9 @@ export class CreatePaymentInputDto {
   @Field(() => String, { nullable: true })
   description: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => [String], { nullable: true })
   @IsOptional()
-  couponCode: string;
+  couponCode: string[];
 
   @Field(() => [OrderItem])
   @ArrayMinSize(1)

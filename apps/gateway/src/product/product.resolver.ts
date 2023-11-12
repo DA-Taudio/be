@@ -110,8 +110,21 @@ export class ProductResolver {
     @Context() context: any,
   ) {
     const { _id } = context.req.user;
+    const { couponCode, ...inputPayment } = input;
 
-    return await this._productService.createPayment(input, _id);
+    const data = await this._productService.applyVouchers(
+      { couponCode, items: inputPayment.items },
+      _id,
+    );
+    return await this._productService.createPayment(
+      {
+        ...input,
+        discountAmount: data.discountAmount,
+        amount: data.discountAmount,
+        infoCouponCode: data.info,
+      },
+      _id,
+    );
   }
 
   @Query(() => ListOrderResponse)

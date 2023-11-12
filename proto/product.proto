@@ -187,12 +187,14 @@ message OrderItem {
 message CreatePaymentRequest{
     string code = 1;
     string description = 2;
-    string couponCode = 3;
+    int32 discountAmount = 3;
+    int32 amount= 9;
     repeated OrderItem items = 4;
     PaymentMethod paymentMethod = 5;
     PaymentType  paymentType = 6;
     PaymentProvider paymentProvider =7;
     string shippingAddress = 8;
+    InfoApply infoCouponCode = 10;
 }
 
 message CreatePaymentResponse {
@@ -261,6 +263,7 @@ message OrderDto {
     repeated OrderItem items = 11;
     ShippingStatus shippingStatus = 12;
     string shippingAddress = 13;
+    InfoApply infoCouponCode = 15;
 
      //base
    double createdAt = 20;
@@ -500,9 +503,9 @@ message InfoApply{
 }
 
 message ApplyVouchersResponse{
-    int64 discountAmount = 1;
+    int32 discountAmount = 1;
     repeated InfoApply info = 2;
-    int64 totalPayment = 3;
+    int32 totalPayment = 3;
     repeated OrderItem items = 4;
 }
 

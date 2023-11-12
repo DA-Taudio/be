@@ -176,12 +176,14 @@ export interface OrderItem {
 export interface CreatePaymentRequest {
   code: string;
   description: string;
-  couponCode: string;
+  discountAmount: number;
+  amount: number;
   items: OrderItem[];
   paymentMethod: PaymentMethod;
   paymentType: PaymentType;
   paymentProvider: PaymentProvider;
   shippingAddress: string;
+  infoCouponCode: InfoApply | undefined;
 }
 
 export interface CreatePaymentResponse {
@@ -247,6 +249,7 @@ export interface OrderDto {
   items: OrderItem[];
   shippingStatus: ShippingStatus;
   shippingAddress: string;
+  infoCouponCode: InfoApply | undefined;
   /** base */
   createdAt: number;
   createdBy: number;

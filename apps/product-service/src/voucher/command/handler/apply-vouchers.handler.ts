@@ -22,7 +22,7 @@ export class ApplyVouchersHandler
     cmd,
     userId,
   }: ApplyVouchersCommand): Promise<ApplyVouchersResponse> {
-    let amount;
+    let amount = 0;
     let reducedAmount = 0;
     let discountAmount = 0;
     let newItems = [];

@@ -9,8 +9,8 @@ import {
   ProductServiceClient,
   UpdateVoucherRequest,
 } from '@app/proto-schema/proto/product.pb';
-import { Inject } from '@nestjs/common';
-import { Args, Query, Mutation } from '@nestjs/graphql';
+import { Inject, UseGuards } from '@nestjs/common';
+import { Args, Query, Mutation, Context } from '@nestjs/graphql';
 import { ClientGrpc } from '@nestjs/microservices';
 import {
   ApplyVouchersInput,
@@ -24,6 +24,7 @@ import {
   ListVoucherResponse,
   VoucherResponse,
 } from './type';
+import { AuthenticationGuard } from '../auth/guards';
 
 export class VoucherResolver {
   private productService: ProductServiceClient;
@@ -39,9 +40,16 @@ export class VoucherResolver {
   }
 
   @Mutation(() => ApplyVouchersResponse)
-  async applyVouchers(@Args('input') input: ApplyVouchersInput) {
+  @UseGuards(AuthenticationGuard)
+  async applyVouchers(
+    @Args('input') input: ApplyVouchersInput,
+    @Context() context: any,
+  ) {
+    const { _id } = context.req.user;
+
     return await this.productService.applyVouchers(
       input as ApplyVouchersRequest,
+      this.metadata.setUserId(_id),
     );
   }
 

@@ -1,4 +1,5 @@
 import {
+  ApplyVouchersRequest,
   CreatePaymentRequest,
   CreateProductRequest,
   CreateProductResponse,
@@ -18,6 +19,7 @@ import {
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import {
+  ApplyVouchersInput,
   CreatePaymentInputDto,
   CreateProductInputDto,
   GetListProductInput,
@@ -112,10 +114,24 @@ export class ProductService {
    * @param input
    * @returns
    */
-  async createPayment(input: CreatePaymentInputDto, userId: string) {
+  async createPayment(input: any, userId: string) {
     return await firstValueFrom(
       this.productService.createPayment(
         input as unknown as CreatePaymentRequest,
+        this.metadata.setUserId(userId),
+      ),
+    );
+  }
+
+  /**
+   * create Payment function
+   * @param input
+   * @returns
+   */
+  async applyVouchers(input: ApplyVouchersInput, userId: string) {
+    return await firstValueFrom(
+      this.productService.applyVouchers(
+        input as unknown as ApplyVouchersRequest,
         this.metadata.setUserId(userId),
       ),
     );
