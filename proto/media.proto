@@ -1,8 +1,15 @@
 syntax = "proto3";
 package media;
+import "base.proto"; 
 
 service MediaService {
     rpc GetManyMedia( GetManyMediaRequest) returns (GetManyMediaResponse){}
+    rpc listSlider(ListSliderRequest) returns (ListSliderResponse){}
+    rpc getSlider(GetSliderRequest) returns (SliderResponse) {}
+    rpc createSlider(CreateSliderRequest) returns (SliderResponse) {}
+    rpc updateSlider(UpdateSliderRequest) returns (base.BooleanPayload) {}
+    rpc deleteSlider(DeleteSliderRequest) returns (base.BooleanPayload) {}
+
 }
 message Media {
     string userId =1;
@@ -27,4 +34,51 @@ message GetManyMediaRequest{
 
 message GetManyMediaResponse{
     repeated Media media =1;
+}
+
+enum SliderType{
+  VIDEO = 0;
+  IMAGE = 1;
+}
+
+message SliderResponse{
+    string _id = 1;
+    string mediaId = 2;
+    int32 position = 3;
+    SliderType type = 4;
+    string redirectUrl = 5;
+}
+message FilterList{
+    SliderType type_eq = 3;
+}
+
+message ListSliderRequest {
+    FilterList filter = 1;
+    base.PaginationInput pagination = 2;
+}
+message GetSliderRequest{
+    string sliderId = 1;
+}
+message CreateSliderRequest{
+    string mediaId = 1;
+    int32 position = 2;
+    SliderType type = 3;
+    string  redirectUrl = 4;
+}
+
+message UpdateSliderRequest{
+    string mediaId = 1;
+    int32 position = 2;
+    SliderType type = 3;
+    string  redirectUrl = 4;
+}
+
+message DeleteSliderRequest{
+    string sliderId = 1;
+
+}
+message ListSliderResponse{
+    repeated SliderResponse sliders = 1;
+    base.PaginationResponse pagination = 2;
+    int32 totalItem =3;
 }
