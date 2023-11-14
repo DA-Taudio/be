@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { MediaController } from './media.controller';
 import { MediaService } from './media.service';
 import {
+  FindNoSQL,
   MediaEntity,
   ServiceRegistryModule,
   TypeOrmConfigService,
@@ -54,6 +55,6 @@ import { usersClientOptions } from '@app/proto-schema';
     ]),
   ],
   controllers: [MediaController],
-  providers: [MediaService, JwtStrategy],
+  providers: [MediaService, JwtStrategy, FindNoSQL],
 })
 export class MediaModule {}

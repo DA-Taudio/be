@@ -71,6 +71,7 @@ export interface UpdateSliderRequest {
   position: number;
   type: SliderType;
   redirectUrl: string;
+  sliderId: string;
 }
 
 export interface DeleteSliderRequest {

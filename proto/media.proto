@@ -71,6 +71,8 @@ message UpdateSliderRequest{
     int32 position = 2;
     SliderType type = 3;
     string  redirectUrl = 4;
+    string sliderId = 5;
+
 }
 
 message DeleteSliderRequest{

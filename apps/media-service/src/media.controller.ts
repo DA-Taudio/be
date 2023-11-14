@@ -23,8 +23,13 @@ import { CreateMediaDto, PageOptionsDto } from './dtos';
 import { parse } from 'path';
 import { GrpcMethod } from '@nestjs/microservices';
 import {
+  CreateSliderRequest,
+  DeleteSliderRequest,
   GetManyMediaRequest,
+  GetSliderRequest,
+  ListSliderRequest,
   MEDIA_SERVICE_NAME,
+  UpdateSliderRequest,
 } from '@app/proto-schema/proto/media.pb';
 
 @ApiTags('MEDIA<3')
@@ -72,5 +77,25 @@ export class MediaController {
   @GrpcMethod(MEDIA_SERVICE_NAME, 'GetManyMedia')
   async getMediaByIds(request: GetManyMediaRequest) {
     return await this.mediaService.getMediaByIds(request.ids);
+  }
+  @GrpcMethod(MEDIA_SERVICE_NAME, 'listSlider')
+  async listSlider(request: ListSliderRequest) {
+    return await this.mediaService.listSlider(request);
+  }
+  @GrpcMethod(MEDIA_SERVICE_NAME, 'getSlider')
+  async getSlider(request: GetSliderRequest) {
+    return await this.mediaService.getSlider(request);
+  }
+  @GrpcMethod(MEDIA_SERVICE_NAME, 'createSlider')
+  async createSlider(request: CreateSliderRequest) {
+    return await this.mediaService.createSlider(request);
+  }
+  @GrpcMethod(MEDIA_SERVICE_NAME, 'updateSlider')
+  async updateSlider(request: UpdateSliderRequest) {
+    return await this.mediaService.updateSlider(request);
+  }
+  @GrpcMethod(MEDIA_SERVICE_NAME, 'deleteSlider')
+  async deleteSlider(request: DeleteSliderRequest) {
+    return await this.mediaService.deleteSlider(request);
   }
 }
