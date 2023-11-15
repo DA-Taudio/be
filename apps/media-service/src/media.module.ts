@@ -5,10 +5,11 @@ import {
   FindNoSQL,
   MediaEntity,
   ServiceRegistryModule,
+  SliderEntity,
   TypeOrmConfigService,
 } from '@app/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MediaRepository } from './media.repository';
+import { MediaRepository, SliderRepository } from './media.repository';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigService } from '@nestjs/config';
 import { join } from 'path';
@@ -23,7 +24,12 @@ import { usersClientOptions } from '@app/proto-schema';
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
     }),
-    TypeOrmModule.forFeature([MediaEntity, MediaRepository]),
+    TypeOrmModule.forFeature([
+      MediaEntity,
+      MediaRepository,
+      SliderEntity,
+      SliderRepository,
+    ]),
     ServeStaticModule.forRootAsync({
       useFactory: (configService: ConfigService) => [
         {

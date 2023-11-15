@@ -30,6 +30,7 @@ import { DataloaderModule } from './dataloaders/dataloader.module';
 import { DataloaderService } from './dataloaders/dataloader.service';
 import { MEDIA_SERVICE_NAME } from '@app/proto-schema/proto/media.pb';
 import { AppController } from './app.controller';
+import { MediaModule } from './media/media.module';
 
 @Global()
 @Module({
@@ -82,6 +83,7 @@ import { AppController } from './app.controller';
     MessageModule,
     ProductModule,
     UserModule,
+    MediaModule,
   ],
   controllers: [AppController],
   providers: [AppMetadata],
