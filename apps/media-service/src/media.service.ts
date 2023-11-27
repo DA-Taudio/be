@@ -121,7 +121,7 @@ export class MediaService {
       deletedAt: null,
     };
 
-    let orderBy = 'createdAt_DESC';
+    let orderBy = 'position_ASC';
 
     const option = this.find.getOption({
       limit,
@@ -135,7 +135,7 @@ export class MediaService {
     });
 
     return {
-      Vouchers: data || [],
+      sliders: data || [],
       totalItem: totalCount,
       pagination: {
         currentPage: page,
