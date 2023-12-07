@@ -165,7 +165,16 @@ export class MediaService {
    * @param CreateSliderRequest
    */
   public async createSlider(input: CreateSliderRequest) {
-    return await this._sliderRepository.save(input);
+    const lastSlider = await this._sliderRepository.findOne({
+      order: {
+        position: 'DESC',
+      },
+    });
+
+    return await this._sliderRepository.save({
+      ...input,
+      position: lastSlider.position + 1,
+    });
   }
 
   /**
@@ -173,8 +182,6 @@ export class MediaService {
    * @param UpdateSliderRequest
    */
   public async updateSlider(input: UpdateSliderRequest) {
-    console.log(input);
-
     const { sliderId, ...update } = input;
     const slider = await this._sliderRepository.findOne({
       where: {
@@ -200,7 +207,7 @@ export class MediaService {
       });
     }
     await this._sliderRepository.findOneAndUpdate(
-      { _id: sliderId },
+      { _id: convertToObjectId(sliderId) },
       { $set: { ...update } },
       { returnOriginal: false },
     );
@@ -220,6 +227,15 @@ export class MediaService {
       },
     });
     if (!slider) throw new RpcException('Không tìm thấy slider');
-    return await this._sliderRepository.softDeleteById(sliderId);
+    await this._sliderRepository.softDeleteById(sliderId);
+    await this._sliderRepository.updateMany(
+      {
+        position: { $gt: slider.position },
+      },
+      {
+        $inc: { position: -1 },
+      },
+    );
+    return { success: true };
   }
 }

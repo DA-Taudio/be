@@ -15,7 +15,7 @@ export class SliderResponse {
   @Field(() => SliderType)
   type: SliderType;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   redirectUrl: string;
 }
 
