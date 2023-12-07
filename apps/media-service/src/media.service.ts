@@ -161,7 +161,7 @@ export class MediaService {
   }
 
   /**
-   *
+   *ơ]
    * @param CreateSliderRequest
    */
   public async createSlider(input: CreateSliderRequest) {
@@ -173,6 +173,8 @@ export class MediaService {
    * @param UpdateSliderRequest
    */
   public async updateSlider(input: UpdateSliderRequest) {
+    console.log(input);
+
     const { sliderId, ...update } = input;
     const slider = await this._sliderRepository.findOne({
       where: {
@@ -197,11 +199,12 @@ export class MediaService {
         $inc: { position: incrementValue },
       });
     }
-    return await this._sliderRepository.findOneAndUpdate(
+    await this._sliderRepository.findOneAndUpdate(
       { _id: sliderId },
       { $set: { ...update } },
       { returnOriginal: false },
     );
+    return { success: true };
   }
 
   /**
