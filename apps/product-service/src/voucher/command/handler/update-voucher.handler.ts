@@ -14,8 +14,12 @@ export class UpdateVoucherHandler
   async execute({ cmd }: UpdateVoucherCommand): Promise<BooleanPayload> {
     const { _id, ...updateInput } = cmd;
     const voucher = await this._voucherRepository.findById(cmd._id);
-    if (!voucher) throw new RpcException('Sản phẩm không tồn tại !');
-
+    if (!voucher) throw new RpcException('Voucher không tồn tại !');
+    if (new Date(voucher.startTime) <= new Date()) {
+      throw new RpcException(
+        'Voucher đang được áp dụng, không thể chỉnh sửa !',
+      );
+    }
     const { value } = await this._voucherRepository.findOneAndUpdate(
       { _id: cmd._id },
       { $set: { ...updateInput } },

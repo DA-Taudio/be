@@ -8,6 +8,7 @@ import {
   DeleteVoucherRequest,
   ListVoucherRequest,
   PRODUCT_SERVICE_NAME,
+  UpdateVoucherRequest,
 } from '@app/proto-schema/proto/product.pb';
 import { Controller } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
@@ -19,6 +20,7 @@ import {
   CreateVoucherCommand,
   DeleteHistoryVoucherCommand,
   DeleteVoucherCommand,
+  UpdateVoucherCommand,
 } from './command';
 import { ListVoucherQuery } from './query';
 import { Metadata } from '@grpc/grpc-js';
@@ -33,6 +35,10 @@ export class VoucherController {
   @GrpcMethod(PRODUCT_SERVICE_NAME, 'createVoucher')
   async createVoucher(input: CreateVoucherRequest) {
     return await this.commandBus.execute(new CreateVoucherCommand(input));
+  }
+  @GrpcMethod(PRODUCT_SERVICE_NAME, 'updateVoucher')
+  async updateVoucher(input: UpdateVoucherRequest) {
+    return await this.commandBus.execute(new UpdateVoucherCommand(input));
   }
 
   @GrpcMethod(PRODUCT_SERVICE_NAME, 'listVoucher')
