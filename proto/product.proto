@@ -54,6 +54,7 @@ service ProductService{
     //History Voucher
     rpc createHistoryVoucher(CreateHistoryVoucherRequest) returns (HistoryVoucherResponse){}
     rpc deleteHistoryVoucher(DeleteHistoryVoucherRequest) returns (base.BooleanPayload){}
+    rpc countHistoryVoucher(CountHistoryVoucherRequest) returns (CountHistoryVoucherResponse){}
 
 }
 
@@ -536,4 +537,12 @@ message CreateHistoryVoucherRequest{
 }
 message DeleteHistoryVoucherRequest{
     string historyVoucherId = 1;
+}
+
+message CountHistoryVoucherRequest{
+    string voucherId =1;
+}
+
+message CountHistoryVoucherResponse{
+    int32 total =1;
 }

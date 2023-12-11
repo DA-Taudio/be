@@ -41,7 +41,7 @@ export class ListVoucherHandler implements IQueryHandler<ListVoucherQuery> {
     const [data, totalCount] = result;
 
     return {
-      Vouchers: data || [],
+      vouchers: data || [],
       totalItem: totalCount,
       pagination: {
         currentPage: page,

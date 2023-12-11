@@ -1,6 +1,7 @@
 import { AppMetadata } from '@app/core';
 import {
   ApplyVouchersRequest,
+  CountHistoryVoucherRequest,
   CreateHistoryVoucherRequest,
   CreateVoucherRequest,
   DeleteHistoryVoucherRequest,
@@ -13,6 +14,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { GrpcMethod } from '@nestjs/microservices';
 import {
   ApplyVouchersCommand,
+  CountHistoryVoucherCommand,
   CreateHistoryVoucherCommand,
   CreateVoucherCommand,
   DeleteHistoryVoucherCommand,
@@ -59,5 +61,9 @@ export class VoucherController {
     return await this.commandBus.execute(
       new DeleteHistoryVoucherCommand(input),
     );
+  }
+  @GrpcMethod(PRODUCT_SERVICE_NAME, 'countHistoryVoucher')
+  async countHistoryVoucher(input: CountHistoryVoucherRequest) {
+    return await this.commandBus.execute(new CountHistoryVoucherCommand(input));
   }
 }

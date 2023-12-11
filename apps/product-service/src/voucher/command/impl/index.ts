@@ -4,3 +4,4 @@ export * from './update-voucher.command';
 export * from './apply-vouchers.command';
 export * from './create-history-voucher.command';
 export * from './delete-history-voucher.command';
+export * from './count-history-voucher.command';

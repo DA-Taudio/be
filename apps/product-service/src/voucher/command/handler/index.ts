@@ -1,4 +1,5 @@
 import { ApplyVouchersHandler } from './apply-vouchers.handler';
+import { CountHistoryVoucherHandler } from './count-history-voucher.handler';
 import { CreateHistoryVoucherHandler } from './create-history-voucher.handler';
 import { CreateVoucherHandler } from './create-voucher.handler';
 import { DeleteHistoryVoucherHandler } from './delete-history-voucher.handler';
@@ -12,4 +13,5 @@ export const VoucherCommandHandlers = [
   ApplyVouchersHandler,
   CreateHistoryVoucherHandler,
   DeleteHistoryVoucherHandler,
+  CountHistoryVoucherHandler,
 ];

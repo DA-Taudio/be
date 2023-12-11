@@ -25,7 +25,11 @@ export class CreateVoucherHandler
     if (voucherExist) {
       throw new RpcException('Mã voucher đã tồn tại!');
     }
-    const voucher = await this._voucherRepository.save(cmd);
+    const voucher = await this._voucherRepository.save({
+      ...cmd,
+      startTime: new Date(cmd.startTime),
+      endTime: new Date(cmd.endTime),
+    });
     return voucher as unknown as VoucherResponse;
   }
 }

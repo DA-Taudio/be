@@ -483,6 +483,14 @@ export interface DeleteHistoryVoucherRequest {
   historyVoucherId: string;
 }
 
+export interface CountHistoryVoucherRequest {
+  voucherId: string;
+}
+
+export interface CountHistoryVoucherResponse {
+  total: number;
+}
+
 export const PRODUCT_PACKAGE_NAME = 'product';
 
 export interface ProductServiceClient {
@@ -664,6 +672,11 @@ export interface ProductServiceClient {
     request: DeleteHistoryVoucherRequest,
     metadata?: Metadata,
   ): Observable<BooleanPayload>;
+
+  countHistoryVoucher(
+    request: CountHistoryVoucherRequest,
+    metadata?: Metadata,
+  ): Observable<CountHistoryVoucherResponse>;
 }
 
 export interface ProductServiceController {
@@ -920,6 +933,14 @@ export interface ProductServiceController {
     request: DeleteHistoryVoucherRequest,
     metadata?: Metadata,
   ): Promise<BooleanPayload> | Observable<BooleanPayload> | BooleanPayload;
+
+  countHistoryVoucher(
+    request: CountHistoryVoucherRequest,
+    metadata?: Metadata,
+  ):
+    | Promise<CountHistoryVoucherResponse>
+    | Observable<CountHistoryVoucherResponse>
+    | CountHistoryVoucherResponse;
 }
 
 export function ProductServiceControllerMethods() {
@@ -958,6 +979,7 @@ export function ProductServiceControllerMethods() {
       'applyVouchers',
       'createHistoryVoucher',
       'deleteHistoryVoucher',
+      'countHistoryVoucher',
     ];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(

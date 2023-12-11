@@ -10,7 +10,15 @@ import {
   UpdateVoucherRequest,
 } from '@app/proto-schema/proto/product.pb';
 import { Inject, UseGuards } from '@nestjs/common';
-import { Args, Query, Mutation, Context } from '@nestjs/graphql';
+import {
+  Args,
+  Query,
+  Mutation,
+  Context,
+  Resolver,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { ClientGrpc } from '@nestjs/microservices';
 import {
   ApplyVouchersInput,
@@ -22,10 +30,13 @@ import {
 import {
   ApplyVouchersResponse,
   ListVoucherResponse,
+  ProductPayload,
   VoucherResponse,
 } from './type';
 import { AuthenticationGuard } from '../auth/guards';
-
+import { IGraphQLContext } from '@app/core/interfaces';
+import { firstValueFrom } from 'rxjs';
+@Resolver(() => VoucherResponse)
 export class VoucherResolver {
   private productService: ProductServiceClient;
 
@@ -81,5 +92,30 @@ export class VoucherResolver {
   @Query(() => VoucherResponse)
   async getVoucher(@Args('input') input: ReadVoucherInput) {
     return await this.productService.getVoucher(input as GetVoucherRequest);
+  }
+
+  @ResolveField('countHistory', () => Number, { nullable: true })
+  async countHistory(
+    @Parent() voucher: VoucherResponse,
+    @Context() { loaders }: IGraphQLContext,
+  ) {
+    const data = await firstValueFrom(
+      this.productService.countHistoryVoucher({
+        voucherId: voucher._id.toString(),
+      }),
+    );
+
+    return data?.total || 0;
+  }
+
+  @ResolveField('products', () => [ProductPayload], { nullable: true })
+  async products(
+    @Parent() voucher: VoucherResponse,
+    @Context() { loaders }: IGraphQLContext,
+  ) {
+    if (voucher?.productIds) {
+      return loaders.productsLoader.loadMany(voucher?.productIds);
+    }
+    return null;
   }
 }
