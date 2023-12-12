@@ -6,9 +6,9 @@ export class SendPinCodeInput {
   @IsNotEmpty({
     message: 'Vùng lòng nhập email',
   })
-  @IsEmail({
-    message: 'Email không đúng định dạng',
-  })
+  // @IsEmail({
+  //   message: 'Email không đúng định dạng',
+  // })
   email: string;
 }
 
