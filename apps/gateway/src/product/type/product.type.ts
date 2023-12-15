@@ -29,32 +29,8 @@ export class ProductPayload {
   @Field(() => Media, { nullable: true })
   image: string;
 
-  @Field({ nullable: true })
-  video: string;
-
-  @Field({ nullable: true })
-  manufacturer: string;
-
-  @Field({ nullable: true })
-  modelNumber: string;
-
-  @Field({ nullable: true })
-  dimensions: string;
-
-  @Field({ nullable: true })
-  weight: string;
-
-  @Field({ nullable: true })
-  connectivity: string;
-
-  @Field({ nullable: true })
-  powerSource: string;
-
-  @Field({ nullable: true })
-  compatibility: string;
-
-  @Field({ nullable: true })
-  warranty: string;
+  @Field(() => String, { nullable: true })
+  specification: string;
 
   @Field({ nullable: true })
   totalLike: number;

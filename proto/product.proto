@@ -64,16 +64,8 @@ message CreateProductRequest{
     float price = 3;
     int32 countInStock = 4;
     string image = 5;
-    string video = 6;
-    string manufacturer = 7;
-    string modelNumber = 8;
-    string dimensions = 9;
-    string weight = 10;
-    string connectivity = 11;
-    string powerSource = 12;
-    string compatibility = 13;
-    string warranty = 14;
-    string type = 15;
+    string specification = 6;
+    string type = 7;
 }
 
 message CreateProductResponse{
@@ -139,16 +131,8 @@ message ProductRequest{
     float price = 3;
     int32 countInStock = 4;
     string image = 5;
-    string video = 6;
-    string manufacturer = 7;
-    string modelNumber = 8;
-    string dimensions = 9;
-    string weight = 10;
-    string connectivity = 11;
-    string powerSource = 12;
-    string compatibility = 13;
-    string warranty = 14;
-    string type = 15;
+    string specification = 6;
+    string type = 7;
 }
 
 message Product{
@@ -156,16 +140,8 @@ message Product{
     string description = 2;
     float price = 3;
     int32 countInStock = 4;
-    string image = 5;
-    string video = 6;
-    string manufacturer = 7;
-    string modelNumber = 8;
-    string dimensions = 9;
-    string weight = 10;
-    string connectivity = 11;
-    string powerSource = 12;
-    string compatibility = 13;
-    string warranty = 14;
+     string image = 5;
+     string specification = 6;
     int32 totalLike = 15;
     int32 totalComment = 16;
     string _id = 17;

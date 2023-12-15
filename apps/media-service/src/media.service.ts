@@ -173,7 +173,7 @@ export class MediaService {
 
     return await this._sliderRepository.save({
       ...input,
-      position: lastSlider.position + 1,
+      position: lastSlider?.position + 1 || 1,
     });
   }
 

@@ -62,28 +62,7 @@ export class CreateProductInputDto {
   image: string;
 
   @Field(() => String, { nullable: true })
-  manufacturer: string;
-
-  @Field(() => String, { nullable: true })
-  modelNumber: string;
-
-  @Field(() => String, { nullable: true })
-  dimensions: string;
-
-  @Field(() => String, { nullable: true })
-  weight: string;
-
-  @Field(() => String, { nullable: true })
-  connectivity: string;
-
-  @Field(() => String, { nullable: true })
-  powerSource: string;
-
-  @Field(() => String, { nullable: true })
-  compatibility: string;
-
-  @Field(() => String, { nullable: true })
-  warranty: string;
+  specification: string;
 }
 
 @InputType()
@@ -149,28 +128,8 @@ export class ProductInputDto {
   // video: string;
 
   @Field(() => String, { nullable: true })
-  manufacturer: string;
+  specification: string;
 
-  @Field(() => String, { nullable: true })
-  modelNumber: string;
-
-  @Field(() => String, { nullable: true })
-  dimensions: string;
-
-  @Field(() => String, { nullable: true })
-  weight: string;
-
-  @Field(() => String, { nullable: true })
-  connectivity: string;
-
-  @Field(() => String, { nullable: true })
-  powerSource: string;
-
-  @Field(() => String, { nullable: true })
-  compatibility: string;
-
-  @Field(() => String, { nullable: true })
-  warranty: string;
   @Field(() => String)
   type: string;
 }

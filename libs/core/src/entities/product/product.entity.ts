@@ -28,53 +28,13 @@ export class ProductEntity extends BaseNoSQLEntity {
 
   @Column()
   @Expose()
-  @Field()
-  image?: string;
+  @Field(() => String)
+  image: string;
 
   @Column()
   @Expose()
-  @Field()
-  video?: string;
-
-  @Column()
-  @Expose()
-  @Field()
-  manufacturer?: string;
-
-  @Column()
-  @Expose()
-  @Field()
-  modelNumber?: string;
-
-  @Column()
-  @Expose()
-  @Field()
-  dimensions?: string;
-
-  @Column()
-  @Expose()
-  @Field()
-  weight?: string;
-
-  @Column()
-  @Expose()
-  @Field()
-  connectivity?: string;
-
-  @Column()
-  @Expose()
-  @Field()
-  powerSource?: string;
-
-  @Column()
-  @Expose()
-  @Field()
-  compatibility?: string;
-
-  @Column()
-  @Expose()
-  @Field()
-  warranty?: string;
+  @Field(() => String)
+  specification?: string;
 
   @Column({ default: 0 })
   @Expose()

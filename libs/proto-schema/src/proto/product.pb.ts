@@ -52,15 +52,7 @@ export interface CreateProductRequest {
   price: number;
   countInStock: number;
   image: string;
-  video: string;
-  manufacturer: string;
-  modelNumber: string;
-  dimensions: string;
-  weight: string;
-  connectivity: string;
-  powerSource: string;
-  compatibility: string;
-  warranty: string;
+  specification: string;
   type: string;
 }
 
@@ -123,15 +115,7 @@ export interface ProductRequest {
   price: number;
   countInStock: number;
   image: string;
-  video: string;
-  manufacturer: string;
-  modelNumber: string;
-  dimensions: string;
-  weight: string;
-  connectivity: string;
-  powerSource: string;
-  compatibility: string;
-  warranty: string;
+  specification: string;
   type: string;
 }
 
@@ -141,15 +125,7 @@ export interface Product {
   price: number;
   countInStock: number;
   image: string;
-  video: string;
-  manufacturer: string;
-  modelNumber: string;
-  dimensions: string;
-  weight: string;
-  connectivity: string;
-  powerSource: string;
-  compatibility: string;
-  warranty: string;
+  specification: string;
   totalLike: number;
   totalComment: number;
   _id: string;

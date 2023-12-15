@@ -113,7 +113,7 @@ export class ProductResolver {
     const { couponCode, ...inputPayment } = input;
 
     const data = await this._productService.applyVouchers(
-      { couponCode, items: inputPayment.items },
+      { couponCode: couponCode || [], items: inputPayment.items },
       _id,
     );
     const { orderId, ...dataPayment } =
@@ -126,7 +126,7 @@ export class ProductResolver {
         },
         _id,
       );
-    if (dataPayment && data) {
+    if (dataPayment && data && data?.info?.length > 0) {
       await this._productService.createHistoryVoucher({
         voucherId: data.info[0].voucherId,
         userId: _id,
