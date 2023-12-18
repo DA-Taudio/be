@@ -15,11 +15,16 @@ export class ListVoucherHandler implements IQueryHandler<ListVoucherQuery> {
 
   async execute({ query }: ListVoucherQuery): Promise<ListVoucherResponse> {
     const { query: queryVoucher, filter, pagination } = query;
+
+    const { productIds, ...inputFilter } = filter;
     const { limit, page } = pagination;
     const offset = (page - 1) * limit;
     const where: any = {
-      ...filter,
+      ...inputFilter,
       deletedAt: null,
+      ...(productIds && {
+        productId: { $in: productIds },
+      }),
     };
 
     if (queryVoucher) {

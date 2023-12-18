@@ -61,6 +61,8 @@ export class ReadVoucherInput {
 export class FilterVoucherInput {
   @Field(() => VoucherStatus, { nullable: true })
   status_eq: VoucherStatus;
+  @Field(() => [String], { nullable: true })
+  productIds: string[];
 }
 
 @InputType()

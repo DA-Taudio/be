@@ -73,6 +73,7 @@ export interface FilterList {
   price_gte: number;
   type_eq: string;
   status_eq: VoucherStatus;
+  productIds: string[];
 }
 
 export interface SortList {

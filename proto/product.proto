@@ -85,6 +85,7 @@ message FilterList{
     double price_gte = 2;
     string type_eq = 3;
     VoucherStatus status_eq = 4;
+    repeated string productIds = 5;
      
  }
 
