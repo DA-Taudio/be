@@ -108,7 +108,9 @@ export class VoucherResolver {
     return data?.total || 0;
   }
 
-  @ResolveField('products', () => [ProductPayload], { nullable: true })
+  @ResolveField('products', () => [ProductPayload], {
+    nullable: 'itemsAndList',
+  })
   async products(
     @Parent() voucher: VoucherResponse,
     @Context() { loaders }: IGraphQLContext,
