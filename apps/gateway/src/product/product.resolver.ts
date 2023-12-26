@@ -109,6 +109,7 @@ export class ProductResolver {
     @Args('input') input: CreatePaymentInputDto,
     @Context() context: any,
   ) {
+    console.log(input);
     const { _id } = context.req.user;
     const { couponCode, ...inputPayment } = input;
 
@@ -120,13 +121,14 @@ export class ProductResolver {
       await this._productService.createPayment(
         {
           ...input,
+          items: data.items,
           discountAmount: data.discountAmount,
           amount: data.totalPayment,
           infoCouponCode: data.info,
         },
         _id,
       );
-    if (dataPayment && data && data?.info?.length > 0) {
+    if (dataPayment && data?.info?.length > 0) {
       await this._productService.createHistoryVoucher({
         voucherId: data.info[0].voucherId,
         userId: _id,

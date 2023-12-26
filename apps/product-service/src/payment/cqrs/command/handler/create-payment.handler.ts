@@ -39,14 +39,14 @@ export class CreatePaymentHandler
       shippingAddress,
       infoCouponCode,
     } = cmd;
-    const newItems = [];
+
     const amountAfterDiscount = amount - discountAmount;
 
     const order = {
       amount: amountAfterDiscount,
       description: description || `Mua đồ gia dụng thông minh`,
       code,
-      items: newItems,
+      items,
       userId,
       discountAmount,
       subTotal: amount,

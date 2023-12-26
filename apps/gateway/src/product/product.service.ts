@@ -116,6 +116,7 @@ export class ProductService {
    * @returns
    */
   async createPayment(input: any, userId: string) {
+    console.log(input);
     return await firstValueFrom(
       this.productService.createPayment(
         input as unknown as CreatePaymentRequest,

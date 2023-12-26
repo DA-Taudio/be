@@ -64,7 +64,7 @@ export class ApplyVouchersHandler
         throw new RpcException('Bạn đã hết lượt sử dụng voucher !');
 
       await Promise.all(
-        items.map(async (item: any) => {
+        items?.map(async (item: any) => {
           const { id, quantity } = item;
           const product = await this._productRepository.findById(id);
 
