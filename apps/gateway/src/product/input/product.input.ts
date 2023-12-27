@@ -172,11 +172,11 @@ export class GetListProductInput {
 
 @InputType()
 export class CreatePaymentInputDto {
-  @Field(() => String)
+  @Field(() => [String])
   @IsNotEmpty({
     message: 'Vui lòng nhập mã đơn hàng',
   })
-  code: string;
+  code: string[];
 
   @Field(() => String, { nullable: true })
   description: string;
