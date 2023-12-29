@@ -1,3 +1,4 @@
+import { AnalyticHandler } from './analytic.handler';
 import { GetListProductHandler } from './get-list-product.handler';
 import { GetProductHandler } from './get-product.handler';
 import { IsFavoriteProductHandler } from './is-favorite-product.handler';
@@ -10,4 +11,5 @@ export const ProductQueryHandlers = [
   ListProductByIdsHandler,
   IsFavoriteProductHandler,
   ListCartHandler,
+  AnalyticHandler,
 ];

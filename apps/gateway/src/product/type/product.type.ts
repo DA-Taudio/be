@@ -219,3 +219,31 @@ export class ListCartType {
   @Field(() => [CartType], { nullable: true })
   cart: CartType[];
 }
+@ObjectType()
+export class DetailAnalytic {
+  @Field(() => Number, { nullable: true })
+  revenue: number;
+
+  @Field(() => Number, { nullable: true })
+  order: number;
+
+  @Field(() => String, { nullable: true })
+  date: string;
+}
+@ObjectType()
+export class AnalyticType {
+  @Field(() => Number, { nullable: true })
+  product: number;
+
+  @Field(() => Number, { nullable: true })
+  revenue: number;
+
+  @Field(() => Number, { nullable: true })
+  user: number;
+
+  @Field(() => Number, { nullable: true })
+  order: number;
+
+  @Field(() => DetailAnalytic, { nullable: true })
+  detail: DetailAnalytic;
+}

@@ -10,6 +10,7 @@ import {
   Parent,
 } from '@nestjs/graphql';
 import {
+  AnalyticType,
   CartType,
   CreatePaymentResponse,
   GetListProductResponse,
@@ -24,6 +25,7 @@ import {
 } from './type';
 import {
   AddToCartInput,
+  AnalyticInput,
   ConfirmOrderInput,
   CreatePaymentInputDto,
   CreateProductInputDto,
@@ -94,6 +96,11 @@ export class ProductResolver {
   async clearCart(@Context() context: any) {
     const { _id } = context.req.user;
     return await this._productService.clearCart(_id);
+  }
+
+  @Query(() => AnalyticType, { nullable: true })
+  async analytic(@Args('input') input: AnalyticInput) {
+    return await this._productService.analytic(input);
   }
 
   @Query(() => ListCartType)

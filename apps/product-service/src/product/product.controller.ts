@@ -1,6 +1,7 @@
 import { AppMetadata } from '@app/core';
 import {
   AddToCartRequest,
+  AnalyticRequest,
   ClearCartRequest,
   CreateProductRequest,
   DeleteProductRequest,
@@ -27,6 +28,7 @@ import {
   UpdateProductCommand,
 } from './cqrs/command';
 import {
+  AnalyticQuery,
   GetListProductQuery,
   GetProductQuery,
   IsFavoriteProductQuery,
@@ -111,5 +113,10 @@ export class ProductController {
     return await this.commandBus.execute(
       new ClearCartCommand(input, this.appMetadata.getUserId(metadata)),
     );
+  }
+
+  @GrpcMethod(PRODUCT_SERVICE_NAME, 'analytic')
+  async analytic(input: AnalyticRequest) {
+    return await this.queryBus.execute(new AnalyticQuery(input));
   }
 }

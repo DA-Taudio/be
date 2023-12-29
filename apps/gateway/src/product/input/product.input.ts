@@ -240,3 +240,11 @@ export class RemoveFromCartInput {
   @Field(() => String)
   _id: string;
 }
+@InputType()
+export class AnalyticInput {
+  @Field(() => String)
+  startTime: string;
+
+  @Field(() => String)
+  endTime: string;
+}

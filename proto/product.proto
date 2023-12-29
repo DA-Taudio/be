@@ -56,6 +56,9 @@ service ProductService{
     rpc deleteHistoryVoucher(DeleteHistoryVoucherRequest) returns (base.BooleanPayload){}
     rpc countHistoryVoucher(CountHistoryVoucherRequest) returns (CountHistoryVoucherResponse){}
 
+    //Analytic
+    rpc Analytic(AnalyticRequest) returns (AnalyticResponse) {}
+
 }
 
 message CreateProductRequest{
@@ -522,4 +525,23 @@ message CountHistoryVoucherRequest{
 
 message CountHistoryVoucherResponse{
     int32 total =1;
+}
+
+message AnalyticRequest{
+    string startTime = 1;
+    string endTime = 2;
+} 
+
+message AnalyticResponse{
+    int32 product = 1;
+    int32 revenue =  2;
+    int32 user = 3;
+    int32 order = 4;
+    repeated DetailAnalytic detail = 5;
+} 
+
+message DetailAnalytic{
+    int32 revenue = 1;
+    int32 order = 2;
+    string date = 3;
 }

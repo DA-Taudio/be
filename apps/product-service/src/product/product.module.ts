@@ -1,4 +1,11 @@
-import { AppMetadata, CartEntity, FindNoSQL, ProductEntity } from '@app/core';
+import {
+  AppMetadata,
+  CartEntity,
+  FindNoSQL,
+  OrderEntity,
+  ProductEntity,
+  UserEntity,
+} from '@app/core';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductRepository } from './product.repository';
@@ -7,6 +14,8 @@ import { ProductCommandHandlers } from './cqrs/command';
 import { ProductQueryHandlers } from './cqrs/query';
 import { ProductFavoriteRepository } from './product-favorite.repository';
 import { CartRepository } from './cart.repository';
+import { UserRepository } from 'apps/mailer-service/src/mailer/users.repository';
+import { OrderRepository } from '../payment/order.repository';
 
 @Module({
   imports: [
@@ -16,6 +25,10 @@ import { CartRepository } from './cart.repository';
       ProductFavoriteRepository,
       CartEntity,
       CartRepository,
+      UserEntity,
+      UserRepository,
+      OrderEntity,
+      OrderRepository,
     ]),
   ],
   controllers: [ProductController],

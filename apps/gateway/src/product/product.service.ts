@@ -194,6 +194,10 @@ export class ProductService {
       this.productService.clearCart({}, this.metadata.setUserId(userId)),
     );
   }
+
+  async analytic(input) {
+    return await firstValueFrom(this.productService.analytic(input));
+  }
   async detailOrder(input) {
     return await firstValueFrom(this.productService.detailOrder(input));
   }
