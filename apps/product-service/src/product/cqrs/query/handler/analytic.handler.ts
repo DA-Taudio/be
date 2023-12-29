@@ -16,8 +16,7 @@ export class AnalyticHandler implements IQueryHandler<AnalyticQuery> {
   ) {}
   async execute({ cmd }: AnalyticQuery): Promise<any> {
     const { startTime, endTime } = cmd;
-    console.log(new Date(startTime));
-    console.log(new Date(endTime));
+
     const [product, countProduct] =
       await this._repository.findAllAndCountWithoutDeletedAt({});
 
