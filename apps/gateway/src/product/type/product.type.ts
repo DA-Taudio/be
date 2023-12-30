@@ -244,6 +244,6 @@ export class AnalyticType {
   @Field(() => Number, { nullable: true })
   order: number;
 
-  @Field(() => DetailAnalytic, { nullable: true })
-  detail: DetailAnalytic;
+  @Field(() => [DetailAnalytic], { nullable: true })
+  detail: DetailAnalytic[];
 }
