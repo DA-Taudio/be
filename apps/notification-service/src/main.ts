@@ -11,7 +11,7 @@ async function bootstrap() {
     notificationClientOptions,
   );
   app.listen().then(() => {
-    logger.log('Microservice messages is listening in port 60067');
+    logger.log('Microservice messages is listening in port20067');
   });
 }
 bootstrap();

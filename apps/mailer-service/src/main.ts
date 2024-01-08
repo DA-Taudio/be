@@ -11,7 +11,7 @@ async function bootstrap() {
     mailerClientOptions,
   );
   app.listen().then(() => {
-    logger.log('Microservice mailer is listening 60063...');
+    logger.log('Microservice mailer is listening20063...');
   });
 }
 bootstrap();

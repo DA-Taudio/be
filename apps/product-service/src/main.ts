@@ -22,9 +22,9 @@ async function bootstrap() {
   await app.startAllMicroservices();
   app.init();
 
-  const port = 7006;
+  const port = 9006;
   await app.listen(port, () => {
-    logger.log('Microservice products is listening in port 60065');
+    logger.log('Microservice products is listening in port20065');
   });
 }
 bootstrap();

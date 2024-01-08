@@ -12,7 +12,7 @@ import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { MessageService } from './message.service';
 
 @Processor('message')
-@WebSocketGateway({ cors: true, port: 8000 })
+@WebSocketGateway({ cors: true, port: 9000 })
 export class MessageProcessor {
   constructor(
     @Inject(MessageService) private readonly messageService: MessageService,

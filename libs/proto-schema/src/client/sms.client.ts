@@ -7,7 +7,7 @@ export const smsClientOptions: ClientOptions = {
   options: {
     package: SMS_PACKAGE_NAME,
     protoPath: join(`${process.cwd()}/proto/sms.proto`),
-    url: 'localhost:60062',
+    url: 'localhost:20062',
     loader: {
       keepCase: true,
       longs: String,

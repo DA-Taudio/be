@@ -26,7 +26,7 @@ async function bootstrap() {
   await app.startAllMicroservices();
   app.init();
 
-  const port = 7007;
+  const port = 9007;
   await app.listen(port, () => {
     logger.log(`Server on http://localhost:${port}/`);
   });

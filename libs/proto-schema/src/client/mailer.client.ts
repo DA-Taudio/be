@@ -7,7 +7,7 @@ export const mailerClientOptions: ClientOptions = {
   options: {
     package: MAILER_PACKAGE_NAME,
     protoPath: join(`${process.cwd()}/proto/mailer.proto`),
-    url: 'localhost:60063',
+    url: 'localhost:20063',
     loader: {
       keepCase: true,
       longs: String,

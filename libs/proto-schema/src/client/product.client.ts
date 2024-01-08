@@ -7,7 +7,7 @@ export const productClientOptions: ClientOptions = {
   options: {
     package: PRODUCT_PACKAGE_NAME,
     protoPath: join(`${process.cwd()}/proto/product.proto`),
-    url: 'localhost:60065',
+    url: 'localhost:20065',
     loader: {
       keepCase: true,
       longs: String,

@@ -10,7 +10,7 @@ import { MessageService } from './message.service';
 import { Queue } from 'bull';
 import { InjectQueue } from '@nestjs/bull';
 
-@WebSocketGateway({ cors: true, port: 8000 })
+@WebSocketGateway({ cors: true, port: 9000 })
 export class MessageGateway {
   constructor(@InjectQueue('message') private readonly messagesQueue: Queue) {}
 
