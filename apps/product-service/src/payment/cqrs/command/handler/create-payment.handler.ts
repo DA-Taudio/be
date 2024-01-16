@@ -44,7 +44,7 @@ export class CreatePaymentHandler
 
     const order = {
       amount: amountAfterDiscount,
-      description: description || `Mua đồ gia dụng thông minh`,
+      description: description || `Mua đồ audio`,
       code,
       items,
       userId,

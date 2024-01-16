@@ -50,8 +50,6 @@ export class SmsProcessor {
     try {
       this._logger.log(`[Starting send sms to ${phoneNumber}]`);
 
-      const messageBody1 = `\nChào quý khách,\nMã OTP của quý khách là: ${otp}.\nVui lòng nhập mã hoàn tất quá trình giao dịch.\nCảm ơn quý khách đã tin tưởng và sử dụng dịch vụ của chúng tôi.\n\n\t\t\tTrân trọng,\n\t\t\tĐội ngũ NK-SHOP`;
-      const messageBody2 = `NK-SHOP\nOTP - ${otp}`;
       const messageBody3 = `${otp}`;
 
       await this.client.messages.create({
