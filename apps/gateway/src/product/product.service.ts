@@ -219,7 +219,7 @@ export class ProductService {
     const pdfDefinition = {
       content: [
         {
-          text: 'NK-SHOP',
+          text: 'T-Audio',
           style: 'header',
         },
         {
@@ -227,7 +227,7 @@ export class ProductService {
           style: 'subheader',
         },
         {
-          text: `Người Gửi: NK-SHOP`,
+          text: `Người Gửi: T-Audio`,
           style: 'info',
         },
         {
