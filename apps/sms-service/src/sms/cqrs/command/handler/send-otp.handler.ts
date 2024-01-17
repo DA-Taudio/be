@@ -6,9 +6,9 @@ import { SendOtpResponse } from '@app/proto-schema/proto/sms.pb';
 import * as moment from 'moment';
 import { generateOTP } from '@app/utils';
 import * as ms from 'ms';
-const mongoose = require('mongoose');
 import { Queue } from 'bull';
 import { InjectQueue } from '@nestjs/bull';
+import { ObjectId } from 'bson';
 
 @CommandHandler(SendOtpCommand)
 export class SendOtpHandler implements ICommandHandler<SendOtpCommand> {
@@ -29,7 +29,7 @@ export class SendOtpHandler implements ICommandHandler<SendOtpCommand> {
           otpExpiredTime: moment()
             .add(ms('2m') / 1000, 's')
             .toDate(),
-          sessionId: mongoose.Types.ObjectId().toString(),
+          sessionId: new ObjectId().toString(),
         }),
       );
 
