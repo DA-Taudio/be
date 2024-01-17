@@ -19,28 +19,34 @@ export class ListVoucherHandler implements IQueryHandler<ListVoucherQuery> {
   async execute({ query }: ListVoucherQuery): Promise<ListVoucherResponse> {
     const { query: queryVoucher, filter, pagination } = query;
 
-    const { productIds, status_eq, ...inputFilter } = filter;
     const { limit, page } = pagination;
     const offset = (page - 1) * limit;
-    const where: any = {
-      ...inputFilter,
+
+    let where: any = {
       deletedAt: null,
-      ...(productIds && {
-        productIds_in: productIds,
-      }),
     };
-    if (status_eq) {
-      switch (status_eq) {
-        case VoucherStatus.APPLYING:
-          where.startTime_lte = new Date();
-          where.endTime_gte = new Date();
-          break;
-        case VoucherStatus.UPCOMING:
-          where.startTime_gte = new Date();
-          break;
-        case VoucherStatus.EXPIRED:
-          where.endTime_lte = new Date();
-          break;
+    if (filter) {
+      const { productIds, status_eq, ...inputFilter } = filter;
+      where = {
+        ...inputFilter,
+        deletedAt: null,
+        ...(productIds && {
+          productIds_in: productIds,
+        }),
+      };
+      if (status_eq) {
+        switch (status_eq) {
+          case VoucherStatus.APPLYING:
+            where.startTime_lte = new Date();
+            where.endTime_gte = new Date();
+            break;
+          case VoucherStatus.UPCOMING:
+            where.startTime_gte = new Date();
+            break;
+          case VoucherStatus.EXPIRED:
+            where.endTime_lte = new Date();
+            break;
+        }
       }
     }
 
