@@ -45,7 +45,7 @@ export class MailerService {
     const data = {
       to: email,
       from: this._configService.get('MAILDEV_INCOMING_USER'),
-      subject: 'Welcome to NK-SHOP! Verify your Email',
+      subject: 'Welcome to T-Audio! Verify your Email',
       template: 'verify-email',
       context: { code: pinCode },
     };
