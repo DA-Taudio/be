@@ -25,7 +25,9 @@ export class AnalyticHandler implements IQueryHandler<AnalyticQuery> {
 
     const [order, countOrder] =
       await this._orderRepository.findAllAndCountWithoutDeletedAt({
-        status: OrderStatus.COMPLETED,
+        where: {
+          status: OrderStatus.COMPLETED,
+        },
       });
 
     const revenue = order.reduce((total, item) => {
