@@ -55,6 +55,19 @@ export class CreatePaymentHandler
       shippingAddress,
       infoCouponCode,
     };
+    await Promise.all(
+      items.map(async (item: any) => {
+        const { id, quantity, name, image, price } = item;
+        const product = await this._productRepository.findById(id);
+
+        if (product?.countInStock < quantity) {
+          throw new RpcException(
+            'Số lượng sản phẩm trong kho không đủ tạo đơn hàng !',
+          );
+        }
+      }),
+    );
+
     //Thanh toán online
     if (paymentMethod === PaymentMethod.ONLINE && amount > 0) {
       const orderOn = await this._orderRepository.save(
@@ -104,7 +117,12 @@ export class CreatePaymentHandler
         const { id, quantity, name, image, price } = item;
         const product = await this._productRepository.findOneAndUpdate(
           { _id: convertToObjectId(id) },
-          { $inc: { totalSold: quantity } },
+          {
+            $inc: {
+              totalSold: quantity,
+              countInStock: -quantity,
+            },
+          },
         );
       }),
     );
