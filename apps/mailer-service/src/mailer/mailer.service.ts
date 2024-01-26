@@ -16,6 +16,7 @@ import * as moment from 'moment';
 import * as ms from 'ms';
 import { RpcException } from '@nestjs/microservices';
 import { UserRepository } from './users.repository';
+import { ObjectId } from 'bson';
 const mongoose = require('mongoose');
 
 @Injectable()
@@ -39,7 +40,7 @@ export class MailerService {
         otpExpiredTime: moment()
           .add(ms('9m') / 1000, 's')
           .toDate(),
-        sessionId: mongoose.Types.ObjectId().toString(),
+        sessionId: new ObjectId().toString(),
       }),
     );
     const data = {
