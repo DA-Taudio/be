@@ -105,7 +105,12 @@ export class VNPayService {
               async (obj) =>
                 await this._productRepository.findOneAndUpdate(
                   { _id: convertToObjectId(obj.id) },
-                  { $inc: { totalSold: obj.quantity } },
+                  {
+                    $inc: {
+                      totalSold: obj.quantity,
+                      countInStock: -obj.quantity,
+                    },
+                  },
                 ),
             );
 
